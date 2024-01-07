@@ -89,7 +89,7 @@ export default function Home({ session }) {
         </div>
       </div>
       <div className="p-5">
-          <button className="bg-[#5B3410] w-full p-3 font-semibold rounded-lg text-white">Добави изакване</button>
+          <button onClick={() => addPoop()} className="bg-[#5B3410] w-full p-3 font-semibold rounded-lg text-white">Добави изакване</button>
       </div>
 
     </Layout>
