@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import Header from './Navigation/Header';
 
 const Layout =({children}) =>{
     const [session, setSession] = useState([]);
@@ -21,9 +22,7 @@ const Layout =({children}) =>{
       }, [children]);
     return(
         <>
-        <div>
-            Navbar
-        </div>
+        <Header />
         <main>{children}</main>
         </>
     )
