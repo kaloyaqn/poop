@@ -18,6 +18,10 @@ body {
   background: #F8F7F6;
 }
 
+html {
+  background: #F8F7F6;
+}
+
 /* twa e za supabase auth screen */
 .c-bOcPnF-cmFMMs-color-primary {
   background-color: #5B3410 !important;
