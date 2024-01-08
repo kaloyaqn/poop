@@ -1,5 +1,6 @@
 import React from 'react'
 import Profile from '../../Profile'
+import poopLogo from '../../assets/logo-full.png'
 
 
 const Header = () => {
@@ -11,7 +12,7 @@ const Header = () => {
             </div>
         </a>
         <div className='text-lg font-medium'>
-            Poop
+            <img src={poopLogo} alt="Poop logo"/>
         </div>
         <div>
         <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">

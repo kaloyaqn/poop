@@ -5,6 +5,8 @@ import Layout from "../components/layout";
 import List from "../components/List";
 import PrimaryBtn from "../components/Buttons/PrimaryBtn";
 
+import { AnimatePresence, motion } from "framer-motion";
+
 export default function Home({ session }) {
   const userId = session.user.id;
 
@@ -12,6 +14,7 @@ export default function Home({ session }) {
   const [profileInfo, setProfileInfo] = useState([]);
   const [username, setUserName] = useState([]);
   const [score, setScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchRecents();
@@ -31,6 +34,7 @@ export default function Home({ session }) {
 
     if (error === null) {
       setRecents(data);
+      setIsLoading(true);
     }
   }
 
@@ -86,23 +90,25 @@ export default function Home({ session }) {
         </button>
         <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
           Нещо
-        </button> 
+        </button>
         <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
           Нещо
-        </button> 
+        </button>
       </nav>
-      <div className="bg-white rounded-[20px] p-5 text-[#504A45]">
+
+      <div className="bg-white rounded-[20px] p-5 text-[#504A45] transition-transform">
         <p>Изакано общо</p>
         <h1 className="text-[#151616] text-3xl font-bold mb-10">{score}</h1>
         <h6 className="mb-5">Последни изаквания</h6>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 transition-all">
           {recents.map((recent) => (
             <div key={recent.index}>
-              <List recents={recent} />
+              <List isLoading={setIsLoading} recents={recent} />
             </div>
           ))}
         </div>
       </div>
+
       <div className="p-5 pt-6 pb-6  bg-white rounded-[20px] mt-5">
         <div className="mb-3.5 flex justify-between items-center">
           <div className="rounded-full bg-red-900 w-11 h-11 flex justify-center items-center bg-gradient-to-r from-[#BBB0A7] to-[#D5AE8C]">
@@ -120,9 +126,11 @@ export default function Home({ session }) {
             </svg>
           </div>
           <div>
-            <p className="text-[#151616] font-medium leading-4">Готов ли си да се изкаш?</p>
+            <p className="text-[#151616] font-medium leading-4">
+              Готов ли си да се изкаш?
+            </p>
             <span className="text-[#655D56] text-[14px]">
-            Добави изакване, за да си най-лудия
+              Добави изакване, за да си най-лудия
             </span>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { supabase } from "./lib/supabase";
-import { redirect } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 const Welcome = ({ session }) => {
   const [username, setUsername] = useState("");
@@ -17,7 +17,6 @@ const Welcome = ({ session }) => {
     console.log("Error", error);
 
     if (error === null) {
-      redirect("/");
     }
   }
 
