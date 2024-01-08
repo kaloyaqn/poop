@@ -28,6 +28,7 @@ const Welcome = ({ session }) => {
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        className="text-sm bg-transparent rounded-[4px] px-[15px] p-[10px] border-[lightgray]"
       />
       <button onClick={() => ChangeUsername()}>izberi</button>
     </div>

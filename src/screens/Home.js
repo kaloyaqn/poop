@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
+import toast from "react-hot-toast";
+
+import Confetti from "react-confetti";
+
+import { useWindowSize } from "@uidotdev/usehooks";
 
 import Layout from "../components/layout";
 import List from "../components/List";
@@ -11,17 +16,25 @@ import LoadingScreen from "../components/Loading";
 export default function Home({ session }) {
   const userId = session.user.id;
 
+  const { width, height } = useWindowSize();
   const [recents, setRecents] = useState([]);
   const [profileInfo, setProfileInfo] = useState([]);
   const [username, setUserName] = useState([]);
   const [score, setScore] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [celebrate, setCelebrate] = useState(false);
 
   useEffect(() => {
     fetchRecents();
     fetchProfileData();
     console.log("session", session);
   }, []);
+
+  const handleCelebrate = () => {
+    setCelebrate(true);
+    // You can set a timeout to stop the confetti after a certain duration
+    setTimeout(() => setCelebrate(false), 5000); // 5000 milliseconds (5 seconds) in this example
+  };
 
   async function fetchRecents() {
     const { data, error } = await supabase
@@ -36,9 +49,8 @@ export default function Home({ session }) {
     if (error === null) {
       setRecents(data);
       setTimeout(() => {
-      setIsLoading(false);
-
-      }, 1000) 
+        setIsLoading(false);
+      }, 1000);
     }
   }
 
@@ -54,9 +66,7 @@ export default function Home({ session }) {
     if (error === null) {
       setProfileInfo(data);
       setUserName(data[0].username);
-      setTimeout(() => {
-        setScore(data[0].poop_score);
-      }, 500);
+      setScore(data[0].poop_score);
     }
   }
 
@@ -69,6 +79,10 @@ export default function Home({ session }) {
       addPoopScore();
       fetchRecents();
       setScore(score + 1);
+      toast.success("Честито изакване", {
+        icon: "🎉 ",
+      });
+      setCelebrate(true);
     }
 
     console.log("Error", error);
@@ -100,6 +114,17 @@ export default function Home({ session }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
+          <Confetti
+            width={width}
+            height={height}
+            numberOfPieces={celebrate ? 500 : 0}
+            recycle={false}
+            onConfettiComplete={(confetti) => {
+              setCelebrate(false);
+              confetti.reset();
+            }}
+          />
+
           <Layout>
             <nav className="mb-4 flex flex-row gap-3">
               <button className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm">
@@ -156,7 +181,7 @@ export default function Home({ session }) {
                   </span>
                 </div>
               </div>
-              <PrimaryBtn onClick={() => addPoop()}>Добави иазкване</PrimaryBtn>
+              <PrimaryBtn onClick={() => addPoop()}>Добави изакване</PrimaryBtn>
             </div>
           </Layout>
         </motion.div>
