@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import Home from "./screens/Home";
-import { Route, Router, Routes, useLocation } from "react-router-dom";
+import { redirect, Route, Router, Routes, useLocation } from "react-router-dom";
 import Layout from "./components/layout";
 import Profile from "./Profile";
 import NoMatch from "./NoMatch";
@@ -38,6 +38,26 @@ export default function App() {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    async function fetchUpdates() 
+    {
+      if(session && session.user)
+      {      
+        const {data, error} = await supabase
+          .from("profiles")
+          .select("updated_at")
+          .eq("id", session.user.id)
+        ;
+        
+        if (error) { console.log("error: ", error.message) }
+
+        if(data[0].updated_at == null) { router.navigate("/welcome")}
+      }
+    }
+
+    fetchUpdates();
+  })
 
   const router = createBrowserRouter([
     {
