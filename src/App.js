@@ -60,7 +60,6 @@ export default function App() {
         supabaseClient={supabase}
         appearance={{ theme: ThemeSupa }}
         providers={["google"]}
-        redirectTo="https://poop-sigma.vercel.app/welcome" //tova go smenqsh ako shte te mestish na platen domain
         localization={{
           variables: {
             sign_in: {
