@@ -13,6 +13,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import Welcome from "./welcome";
 
 
 
@@ -47,6 +48,10 @@ export default function App() {
       path: "/profile",
       element: <Profile session={session}/>,
     },
+    {
+      path: "/welcome",
+      element: <Welcome session={session}/>,
+    },
   ]);
 
   if (!session) {
@@ -66,7 +71,7 @@ export default function App() {
               button_label: "Влез",
               loading_button_label: "Един момент...",
               social_provider_text: "Влезте с Google",
-              link_text: "Нямате профил? Присъединете се",
+              link_text: "Имате профил? Влезте",
               confirmation_text: "Проверете имейла си, за да го повърдите",
             },
             sign_up: {
@@ -78,7 +83,7 @@ export default function App() {
               button_label: "Присъедини се",
               loading_button_label: "Един момент...",
               social_provider_text: "Влезте с Google ",
-              link_text: "Вече имате профил? Влезте",
+              link_text: "Нямате профил? Присъединете се",
               confirmation_text: "Проверете имейла си, за да го повърдите",
             },
             forgotten_password: {

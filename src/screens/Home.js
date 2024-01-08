@@ -77,6 +77,20 @@ export default function Home({ session }) {
 
   return (
     <Layout>
+      <nav className="mb-4 flex flex-row gap-3">
+        <button className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm">
+          Начало
+        </button>
+        <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
+          Нещо
+        </button>
+        <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
+          Нещо
+        </button> 
+        <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
+          Нещо
+        </button> 
+      </nav>
       <div className="bg-white rounded-[20px] p-5 text-[#504A45]">
         <p>Изакано общо</p>
         <h1 className="text-[#151616] text-3xl font-bold mb-10">{score}</h1>
@@ -113,12 +127,6 @@ export default function Home({ session }) {
           </div>
         </div>
         <PrimaryBtn onClick={() => addPoop()}>Добави иазкване</PrimaryBtn>
-
-        <button onClick={() => {
-          const { error } =  supabase.auth.signOut()
-
-
-        }}>izlez</button>
       </div>
     </Layout>
   );
