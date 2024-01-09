@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;  
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+@import url(https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800);
+
+@font-face {
+  font-family: 'Stolzl';
+  src: local('MyFont'), url(./assets//fonts/Stolzl-Medium.otf) format('otf');
+  font-weight: medium;
+}
 
 body {
   margin: 0;
@@ -27,6 +34,14 @@ html {
   background-color: #5B3410 !important;
   font-family: 'Inter' !important;
   font-weight: medium !important;
+}
+
+.stolzl {
+  font-family: 'Stolzl';
+}
+
+.manrope {
+  font-family: 'Manrope';
 }
 
 .c-bOcPnF {

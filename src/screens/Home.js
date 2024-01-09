@@ -11,7 +11,11 @@ import List from "../components/List";
 import PrimaryBtn from "../components/Buttons/PrimaryBtn";
 
 import { AnimatePresence, motion } from "framer-motion";
+
 import LoadingScreen from "../components/Loading";
+import InfiniteScroll from 'react-infinite-scroll-component';
+import SecondaryBtn from "../components/Buttons/SecondaryBtn";
+
 
 export default function Home({ session }) {
   const userId = session.user.id;
@@ -41,7 +45,7 @@ export default function Home({ session }) {
       .from("poops")
       .select("*")
       .order("created_at", { ascending: false })
-      .limit(3);
+      .limit(20)
 
     // console.log(data);
     // console.log(error);
@@ -147,12 +151,14 @@ export default function Home({ session }) {
                 {score}
               </h1>
               <h6 className="mb-5">Последни изаквания</h6>
-              <div className="flex flex-col gap-5 transition-all">
+              <div className="flex flex-col gap-5 transition-all h-40   overflow-scroll">
                 {recents.map((recent) => (
                   <div key={recent.index}>
                     <List isLoading={setIsLoading} recents={recent} />
                   </div>
                 ))}
+                    <div className="w-full flex justify-center items-center mt-2"><SecondaryBtn>Виж всички</SecondaryBtn></div>
+
               </div>
             </div>
 

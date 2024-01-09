@@ -5,9 +5,8 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import Home from "./screens/Home";
 import { redirect, Route, Router, Routes, useLocation } from "react-router-dom";
-import Layout from "./components/layout";
 import Profile from "./Profile";
-import NoMatch from "./NoMatch";
+
 
 import {
   createBrowserRouter,
