@@ -12,7 +12,7 @@ import LoadingScreen from "./components/Loading";
 
 const supabase = createClient(
   "https://zyuebxkjnotchjumbrqq.supabase.co",
-  "YOUR_SUPABASE_API_KEY"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5dWVieGtqbm90Y2hqdW1icnFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQyNzI1OTcsImV4cCI6MjAxOTg0ODU5N30.uljUag2sAZ1kEBuf8exQodk_Vy_q0sNO-FLgTPTKmFA"
 );
 
 export default function App() {
