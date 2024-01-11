@@ -70,10 +70,11 @@ export default function Account({ session }) {
 
   return (
     <Layout>
-            <form onSubmit={updateProfile} className="form-widget">
+         <form onSubmit={updateProfile} className="form-widget">
             <Avatar
       url={avatar_url}
       size={150}
+      hasUpload={true}
       onUpload={(event, url) => {
         updateProfile(event, url)
       }}

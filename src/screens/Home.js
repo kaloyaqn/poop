@@ -183,7 +183,7 @@ export default function Home({ session }) {
                 </div>
                 <div>
                   <p className="text-[#151616] font-medium leading-4">
-                    Готов ли си да се изкаш?
+                    Готов ли си да се изакаш?
                   </p>
                   <span className="text-[#655D56] text-[14px]">
                     Добави изакване, за да си най-лудия

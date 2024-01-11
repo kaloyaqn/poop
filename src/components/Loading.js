@@ -21,7 +21,7 @@ const LoadingScreen = () => {
     },
     exit: {
       opacity: 0,
-      scale: 10, // Increase the scale to make it disappear off-screen
+      scale: 10.5, // Increase the scale to make it disappear off-screen
       transition: {
         duration: 0.5,
         ease: 'easeInOut',
