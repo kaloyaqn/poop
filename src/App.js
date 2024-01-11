@@ -13,6 +13,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Welcome from "./welcome";
+import Leaderboard from "./pages/leaderboard";
 
 
 
@@ -70,6 +71,10 @@ export default function App() {
     {
       path: "/welcome",
       element: <Welcome session={session}/>,
+    },
+    {
+      path: "/leaderboard",
+      element: <Leaderboard session={session}/>,
     },
   ]);
 

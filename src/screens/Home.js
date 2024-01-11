@@ -58,6 +58,7 @@ export default function Home({ session }) {
     }
   }
 
+  //fetchvame data za profila ot tablica profiles
   async function fetchProfileData() {
     const { data, error } = await supabase
       .from("profiles")
@@ -74,10 +75,11 @@ export default function Home({ session }) {
     }
   }
 
+  //dobawqme ako 
   async function addPoop() {
     const { error } = await supabase
       .from("poops")
-      .insert({ user: username, type: "Aко" });
+      .insert({ user: username, type: "Лайно" });
 
     if (error === null) {
       addPoopScore();
@@ -92,6 +94,7 @@ export default function Home({ session }) {
     console.log("Error", error);
   }
 
+  //dobavqme ako v tablica profiles.score
   async function addPoopScore() {
     const { data, error } = await supabase
       .from("profiles")
@@ -121,7 +124,7 @@ export default function Home({ session }) {
           <Confetti
             width={width}
             height={height}
-            numberOfPieces={celebrate ? 500 : 0}
+            numberOfPieces={celebrate ? 200 : 0}
             recycle={false}
             onConfettiComplete={(confetti) => {
               setCelebrate(false);
@@ -154,7 +157,7 @@ export default function Home({ session }) {
               <div className="flex flex-col gap-5 transition-all h-40   overflow-scroll">
                 {recents.map((recent) => (
                   <div key={recent.index}>
-                    <List isLoading={setIsLoading} recents={recent} />
+                    <List isLoading={setIsLoading} data={recent} ListType={"recent"}/>
                   </div>
                 ))}
                     <div className="w-full flex justify-center items-center mt-2"><SecondaryBtn>Виж всички</SecondaryBtn></div>

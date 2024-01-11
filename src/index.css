@@ -52,6 +52,10 @@ html {
   border: 1px solid lightgray !important;
 }
 
+.bg-primary {
+  background: #5B3410;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
