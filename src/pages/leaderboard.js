@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import { supabase } from "../lib/supabase";
 import List from "../components/List";
 
-const Leaderboard = () => {
+const Leaderboard = ({session}) => {
   const [users, setUsers] = useState([]);
   const [avatarUrl, setAvatarUrl] = useState(null);
 
@@ -24,16 +24,6 @@ const Leaderboard = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-
-  useEffect(() => {
-    if (users.avatar_url) {
-      if (users.avatar_url.includes("https://")) {
-        setAvatarUrl(users.avatar_url);
-      } else {
-        downloadImage(users.avatar_url);
-      }
-    }
-  }, [users.avatar_url]);
 
   async function downloadImage(path) {
     try {

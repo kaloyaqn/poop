@@ -100,9 +100,15 @@ export default function Account({ session }) {
       </div>
 
       <div>
-        <button className="button block" type="button" onClick={() => supabase.auth.signOut()}>
-          Sign Out
-        </button>
+      <button
+        className="bg-red-900"
+        onClick={() => {
+          const { error } = supabase.auth.signOut();
+
+        }}
+      >
+        izlez
+      </button>
       </div>
     </form>
     </Layout>

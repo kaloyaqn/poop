@@ -37,11 +37,14 @@ const RecentList = ({data}) => {
 
 const LeaderboardList = ({ data, index, avatarUrl }) => {
   const [scoreText, setScoreText] = useState(null);
+  const [bgColor, setBgColor] = useState('none');
+
+
 
   let poop_score = data.poop_score;
 
   useEffect(() => {
-    // Add logic to set scoreText based on poop_score
+
     if (poop_score === 0) {
       setScoreText("Не е акал до сега");
     } else if (poop_score === 1) {
@@ -52,7 +55,8 @@ const LeaderboardList = ({ data, index, avatarUrl }) => {
   }, [poop_score]);
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center" 
+    >
       {index}
 
       <div className="flex items-center ml-4">
