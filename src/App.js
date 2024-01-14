@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import Home from "./screens/Home";
+import Home from "./pages/Home";
 import { redirect, Route, Router, Routes, useLocation } from "react-router-dom";
-import Profile from "./Profile";
+import Profile from "./pages/Profile";
 
 
 import {
@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Welcome from "./welcome";
 import Leaderboard from "./pages/leaderboard";
+import LoadingScreen from "./components/Loading";
 
 
 
@@ -24,6 +25,7 @@ const supabase = createClient(
 
 export default function App() {
   const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -33,7 +35,8 @@ export default function App() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+      setSession(session)
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -77,6 +80,12 @@ export default function App() {
       element: <Leaderboard session={session}/>,
     },
   ]);
+
+  if (loading) {
+    return (
+      <LoadingScreen />
+    )
+  }
 
   if (!session) {
     return (

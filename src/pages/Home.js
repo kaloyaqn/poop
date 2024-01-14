@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { supabase } from "../lib/supabase";
 import toast from "react-hot-toast";
 
@@ -13,11 +13,77 @@ import PrimaryBtn from "../components/Buttons/PrimaryBtn";
 import { AnimatePresence, motion } from "framer-motion";
 
 import LoadingScreen from "../components/Loading";
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
 import SecondaryBtn from "../components/Buttons/SecondaryBtn";
-
+import Leaderboard from "./leaderboard";
 
 export default function Home({ session }) {
+  const userId = session.user.id;
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("tab1");
+
+  return (
+    <AnimatePresence mode="wait">
+      {isLoading ? (
+        <motion.div
+          key="loading"
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          <LoadingScreen />
+        </motion.div>
+      ) : (
+        <Layout session={session}>
+          <nav className="mb-4 flex flex-row gap-3">
+            <button
+              onClick={() => setActiveTab("tab1")}
+              className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
+            >
+              Начало
+            </button>
+            <button
+            onClick={() => setActiveTab("tab2")}
+              className={
+                activeTab ===
+                "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+                  ? "bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
+                  : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+              }
+            >
+              Нещо  
+            </button>
+            <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
+              Нещо
+            </button>
+            <button
+              className={
+                activeTab ===
+                "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+                  ? "bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
+                  : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+              }
+            >
+              Нещо
+            </button>
+          </nav>
+
+          {activeTab === "tab1" ? (
+            <HomePage
+              session={session}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          ) : (
+            <Leaderboard />
+          )}
+        </Layout>
+      )}
+    </AnimatePresence>
+  );
+}
+
+const HomePage = ({ session, isLoading, setIsLoading }) => {
   const userId = session.user.id;
 
   const { width, height } = useWindowSize();
@@ -25,7 +91,6 @@ export default function Home({ session }) {
   const [profileInfo, setProfileInfo] = useState([]);
   const [username, setUserName] = useState([]);
   const [score, setScore] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [celebrate, setCelebrate] = useState(false);
 
   useEffect(() => {
@@ -105,17 +170,7 @@ export default function Home({ session }) {
   }
 
   return (
-    <AnimatePresence mode="wait">
-      {isLoading ? (
-        <motion.div
-          key="loading"
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          <LoadingScreen />
-        </motion.div>
-      ) : (
+
         <motion.div
           key="content"
           initial={{ opacity: 0 }}
@@ -132,21 +187,6 @@ export default function Home({ session }) {
             }}
           />
 
-          <Layout>
-            <nav className="mb-4 flex flex-row gap-3">
-              <button className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm">
-                Начало
-              </button>
-              <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
-                Нещо
-              </button>
-              <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
-                Нещо
-              </button>
-              <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
-                Нещо
-              </button>
-            </nav>
 
             <div className="bg-white rounded-[20px] p-5 text-[#504A45] transition-transform">
               <p>Изакано общо</p>
@@ -192,9 +232,9 @@ export default function Home({ session }) {
               </div>
               <PrimaryBtn onClick={() => addPoop()}>Добави изакване</PrimaryBtn>
             </div>
-          </Layout>
         </motion.div>
-      )}
-    </AnimatePresence>
   );
 }
+const LeaderboardPage = () => {
+  return <>Leaderboard</>;
+};

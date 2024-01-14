@@ -6,23 +6,29 @@ import List from "../components/List";
 const Leaderboard = ({session}) => {
   const [users, setUsers] = useState([]);
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const userId = session.user.id;
 
   async function fetchUsers() {
     const { data, error } = await supabase
       .from("profiles")
-      .select("poop_score, username, avatar_url")
+      .select("poop_score, username, avatar_url, id")
       .order("poop_score", { ascending: false });
 
-    console.log(data);
-    console.log(error);
+    // console.log(data);
+    // console.log(error);
 
     if (error === null) {
       setUsers(data);
     }
   }
 
+  function checkForYou() {
+    
+  }
+
   useEffect(() => {
     fetchUsers();
+    console.log(userId)
   }, []);
 
   async function downloadImage(path) {
@@ -48,10 +54,10 @@ const Leaderboard = ({session}) => {
 
   return (
     <Layout>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-1">
         {users.map((user, index) => (
-        <div key={user.index}>
-          <List data={user} index={index + 1} ListType={"leaderboard"} />
+        <div key={user.index} >
+          <List data={user} userId={userId} index={index + 1} ListType={"leaderboard"} />
         </div>
       ))}
         </div>

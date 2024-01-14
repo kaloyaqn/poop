@@ -5,11 +5,11 @@ import Footer from "./Navigation/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, session }) => {
   return (
     <>
       <Toaster />
-      <Header />
+      <Header session={session} />
       <main>
         {children}
         <Analytics />
