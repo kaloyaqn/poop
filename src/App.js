@@ -7,17 +7,12 @@ import Home from "./pages/Home";
 import { redirect, Route, Router, Routes, useLocation } from "react-router-dom";
 import Profile from "./pages/Profile";
 
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Welcome from "./welcome";
 import Leaderboard from "./pages/leaderboard";
 import LoadingScreen from "./components/Loading";
 import Recents from "./pages/Recents";
-
-
+import { AnimatePresence } from "framer-motion";
 
 const supabase = createClient(
   "https://zyuebxkjnotchjumbrqq.supabase.co",
@@ -36,7 +31,7 @@ export default function App() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
+      setSession(session);
       setLoading(false);
     });
 
@@ -44,52 +39,50 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    async function fetchUpdates() 
-    {
-      if(session && session.user)
-      {      
-        const {data, error} = await supabase
+    async function fetchUpdates() {
+      if (session && session.user) {
+        const { data, error } = await supabase
           .from("profiles")
           .select("updated_at")
-          .eq("id", session.user.id)
-        ;
-        
-        if (error) { console.log("error: ", error.message) }
+          .eq("id", session.user.id);
+        if (error) {
+          console.log("error: ", error.message);
+        }
 
-        if(data[0].updated_at == null) { router.navigate("/welcome")}
+        if (data[0].updated_at == null) {
+          router.navigate("/welcome");
+        }
       }
     }
 
     fetchUpdates();
-  })
+  });
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home session={session}/>,
+      element: <Home session={session} />,
     },
     {
       path: "/profile",
-      element: <Profile session={session}/>,
+      element: <Profile session={session} />,
     },
     {
       path: "/welcome",
-      element: <Welcome session={session}/>,
+      element: <Welcome session={session} />,
     },
     {
       path: "/leaderboard",
-      element: <Leaderboard session={session}/>,
+      element: <Leaderboard session={session} />,
     },
     {
       path: "/recents",
-      element: <Recents session={session}/>,
+      element: <Recents session={session} />,
     },
   ]);
 
   if (loading) {
-    return (
-      <LoadingScreen />
-    )
+    return <LoadingScreen />;
   }
 
   if (!session) {
@@ -137,9 +130,6 @@ export default function App() {
       />
     );
   } else {
-    return (
-      <RouterProvider router={router}>
-      </RouterProvider>
-    );
+    return <RouterProvider router={router}></RouterProvider>;
   }
 }

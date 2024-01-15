@@ -25,7 +25,7 @@ const Recents = () => {
       }, []);
   return (
     <Layout>
-        
+        <RecentsComponent recents={recents}/> 
     </Layout>
   )
 }
