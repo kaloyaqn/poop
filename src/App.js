@@ -15,6 +15,7 @@ import {
 import Welcome from "./welcome";
 import Leaderboard from "./pages/leaderboard";
 import LoadingScreen from "./components/Loading";
+import Recents from "./pages/Recents";
 
 
 
@@ -78,6 +79,10 @@ export default function App() {
     {
       path: "/leaderboard",
       element: <Leaderboard session={session}/>,
+    },
+    {
+      path: "/recents",
+      element: <Recents session={session}/>,
     },
   ]);
 

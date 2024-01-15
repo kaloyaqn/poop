@@ -24,6 +24,7 @@ body {
   padding-top:20px;
   background: #F8F7F6;
   background-color: #F8F7F6;
+  margin-bottom: 88px;
 }
 
 html {
@@ -57,6 +58,9 @@ html {
   background: #5B3410;
 }
 
+.parent[data-isOpen="true"] {
+  height: 200px !important;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
