@@ -2,13 +2,24 @@ import React, { useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
 import { motion } from "framer-motion";
 
-const AddPoopBtn = ({ addPoop, session, poopType, setPoopType }) => {
+const AddPoopBtn = ({
+  addPoop,
+  session,
+  poopType,
+  setPoopType,
+  isButtonDisabled,
+  timeDiff,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [active, setActive] = useState(null)
+  const [active, setActive] = useState(null);
 
   const poopTypes = ["Нормално", "Гадно", "Течно", "Твърдо"];
+  let wait = 0;
 
-  
+  if (timeDiff) {
+    wait = 25 - timeDiff;
+  }
+
   return (
     <motion.div
       layout
@@ -49,31 +60,44 @@ const AddPoopBtn = ({ addPoop, session, poopType, setPoopType }) => {
         {isOpen ? (
           <>
             <div className="flex gap-3 mb-4">
-            {poopTypes.map((type) => (
-        <div
-          key={type}
-          className={`rounded-full bg-yellow-300 p-2 text-sm cursor-pointer ${
-            poopType === type ? 'bg-blue-500 text-white' : ''
-          }`}
-          onClick={() => setPoopType(type)}
-        >
-          {type}
-        </div>
-      ))}
+              {poopTypes.map((type) => (
+                <div
+                  key={type}
+                  className={`rounded-full bg-yellow-300 p-2 text-sm cursor-pointer ${
+                    poopType === type ? "bg-blue-500 text-white" : ""
+                  }`}
+                  onClick={() => setPoopType(type)}
+                >
+                  {type}
+                </div>
+              ))}
             </div>
-            <PrimaryBtn onClick={() =>  {
+            <PrimaryBtn
+              onClick={() => {
                 addPoop();
-                setIsOpen(false)
-            }}>Добави изакване</PrimaryBtn>
+                setIsOpen(false);
+              }}
+            >
+              {isButtonDisabled ? <>Добави изакване</> : <>lapai</>}
+            </PrimaryBtn>
           </>
         ) : (
           <>
-            <PrimaryBtn onClick={() => setIsOpen(!isOpen)}>
-              Добави изакване
-            </PrimaryBtn>
+            {isButtonDisabled ? (
+              <>
+                <PrimaryBtn onClick={() => setIsOpen(!isOpen)}>
+                  Добави лайно
+                </PrimaryBtn>
+              </>
+            ) : (
+              <>
+                <PrimaryBtn disabled={true} onClick={() => setIsOpen(!isOpen)}>
+                   Изчакай {wait} мин 
+                </PrimaryBtn>
+              </>
+            )}
           </>
         )}
-        
       </motion.div>
     </motion.div>
   );
