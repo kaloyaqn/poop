@@ -179,21 +179,23 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   }
 
   function comapreLastPoop() {
+    // 1. plavni dvijeniq
     const timeNow = new Date();
-    const timeNowMin = timeNow.getMinutes();
-    const last_poop_value = lastPoop.getMinutes();
-    console.log("na maika ti putkata", timeNowMin, last_poop_value);
-    const diff = timeNowMin - last_poop_value;
-    console.log(diff);
-    setTimeDiff(diff);
 
-    if (diff >= 25) {
-      console.log("mi moje");
+    const nextPoopTime = new Date(lastPoop.getTime() + 25 * 60000); // .getTime() vrushta unix milliseconds; 25 * 60000 = 25 minuti v millisekundi
+
+    const diff = (nextPoopTime - timeNow) / 60000; // razlikata / 60000 za da q prevurnem v minuti
+
+    //2. trqbva da ste mnogo burz
+
+    if (Math.abs(diff) >= 25) { // abs() zashtoto ako timeNow > nextPoopTime diff-a e otricatelen
+      console.log("moje");
       setIsButtonDisable(true);
-    } else {
-      console.log("ne moje");
-      setIsButtonDisable(false);
     }
+    else {
+      console.log("cent");
+      setIsButtonDisable(false);
+    }    
   }
 
   //dobavqme ako v tablica profiles.score
