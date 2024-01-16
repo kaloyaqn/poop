@@ -91,8 +91,8 @@ const AddPoopBtn = ({
               </>
             ) : (
               <>
-                <PrimaryBtn disabled={true} onClick={() => setIsOpen(!isOpen)}>
-                   Изчакай {wait} мин 
+                <PrimaryBtn onClick={() => setIsOpen(!isOpen)}>
+                  Добави лайно
                 </PrimaryBtn>
               </>
             )}

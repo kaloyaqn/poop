@@ -21,6 +21,7 @@ import RecentsComponent from "../components/Information/RecentsComponent";
 import AddPoopBtn from "../components/Buttons/AddPoopBtn";
 
 import moment from "moment";
+import {reload} from "react-router-dom"
 
 
 export default function Home({ session }) {
@@ -100,7 +101,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   const [celebrate, setCelebrate] = useState(false);
   const [lastPoop, setLastPoop] = useState(null);
   const [poopType, setPoopType] = useState("Нормално"); //twa e state za tipa laino
-  const [isButtonDisabled, setIsButtonDisable] = useState(true);
+  const [isButtonDisabled, setIsButtonDisable] = useState(false);
   const [timeDiff, setTimeDiff] = useState(null);
 
   useEffect(() => {
@@ -117,7 +118,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   }, [lastPoop]);
 
 
-  
+
 
 
   const handleCelebrate = () => {
@@ -181,7 +182,8 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
         icon: "🎉 ",
       });
       setCelebrate(true);
-      comapreLastPoop();
+      isButtonDisabled(true)
+
     }
 
     console.log("Error", error);
