@@ -47,7 +47,7 @@ const LeaderboardList = ({ data, index, avatarUrl, userId }) => {
   const [scoreText, setScoreText] = useState(null);
   const [isYou, setIsYou] = useState(false);
   const [bgColor, setBgColor] = useState("none");
-  const [openDrawer, setOpenDrawer] = useState("false");
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   function checkForYou() {
     if (userId === data.id) {
@@ -85,13 +85,13 @@ const LeaderboardList = ({ data, index, avatarUrl, userId }) => {
         <div onClick={() => setOpenDrawer(true)}>
           <Avatar url={data.avatar_url} size={50} hasUpload={false} />
         </div>
-            {/* {openDrawer && (
+            {openDrawer && (
               <Drawer
                 key="drawer"
                 isActive={openDrawer}
                 setIsActive={setOpenDrawer}
               />
-            )} */}
+            )}
         </div>
         <div className="ml-3 flex flex-col">
           <h6 className="font-semibold text-[#161515] mb-0 p-0 leading-4">
