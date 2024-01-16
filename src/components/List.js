@@ -4,6 +4,8 @@ import Moment from "moment";
 import "moment/locale/bg";
 import Avatar from "./Avatar";
 import { Link } from "react-router-dom";
+import Drawer from "./Navigation/Drawer";
+import { AnimatePresence } from "framer-motion";
 
 const List = ({ data, index, ListType, avatarUrl, userId }) => {
   // console.log(data);
@@ -45,6 +47,7 @@ const LeaderboardList = ({ data, index, avatarUrl, userId }) => {
   const [scoreText, setScoreText] = useState(null);
   const [isYou, setIsYou] = useState(false);
   const [bgColor, setBgColor] = useState("none");
+  const [openDrawer, setOpenDrawer] = useState("false");
 
   function checkForYou() {
     if (userId === data.id) {
@@ -78,10 +81,17 @@ const LeaderboardList = ({ data, index, avatarUrl, userId }) => {
 
       <div className="flex items-center ml-4">
         <div className="first-place">
-        <Link to={`user/${data.username}`}>
-        <Avatar url={data.avatar_url} size={50} hasUpload={false} />
-        </Link>
 
+        <div onClick={() => setOpenDrawer(true)}>
+          <Avatar url={data.avatar_url} size={50} hasUpload={false} />
+        </div>
+            {/* {openDrawer && (
+              <Drawer
+                key="drawer"
+                isActive={openDrawer}
+                setIsActive={setOpenDrawer}
+              />
+            )} */}
         </div>
         <div className="ml-3 flex flex-col">
           <h6 className="font-semibold text-[#161515] mb-0 p-0 leading-4">

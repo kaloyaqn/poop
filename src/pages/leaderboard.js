@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/layout";
 import { supabase } from "../lib/supabase";
 import List from "../components/List";
+import Drawer from "../components/Navigation/Drawer";
 
 const Leaderboard = ({session}) => {
   const [users, setUsers] = useState([]);
