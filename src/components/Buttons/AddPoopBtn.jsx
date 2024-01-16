@@ -78,7 +78,7 @@ const AddPoopBtn = ({
                 setIsOpen(false);
               }}
             >
-              {isButtonDisabled ? <>Добави изакване</> : <>lapai</>}
+              {isButtonDisabled ? <>Добави изакване</> : <>Добави лайно</>}
             </PrimaryBtn>
           </>
         ) : (
@@ -92,7 +92,7 @@ const AddPoopBtn = ({
             ) : (
               <>
                 <PrimaryBtn onClick={() => setIsOpen(!isOpen)}>
-                  Добави лайно
+                  Избери лайно
                 </PrimaryBtn>
               </>
             )}

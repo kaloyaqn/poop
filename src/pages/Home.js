@@ -21,8 +21,7 @@ import RecentsComponent from "../components/Information/RecentsComponent";
 import AddPoopBtn from "../components/Buttons/AddPoopBtn";
 
 import moment from "moment";
-import {reload} from "react-router-dom"
-
+import { reload } from "react-router-dom";
 
 export default function Home({ session }) {
   const userId = session.user.id;
@@ -117,10 +116,6 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
     }
   }, [lastPoop]);
 
-
-
-
-
   const handleCelebrate = () => {
     setCelebrate(true);
     // You can set a timeout to stop the confetti after a certain duration
@@ -145,8 +140,6 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
     }
   }
 
-
-
   //fetchvame data za profila ot tablica profiles
   async function fetchProfileData() {
     const { data, error } = await supabase
@@ -162,17 +155,14 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
       setUserName(data[0].username);
       setScore(data[0].poop_score);
       setLastPoop(new Date(data[0].last_poop));
-
-
     }
   }
-
 
   //dobawqme ako
   async function addPoop() {
     const { error } = await supabase
       .from("poops")
-      .insert({ user: username, type: poopType,  });
+      .insert({ user: username, type: poopType });
 
     if (error === null) {
       addPoopScore();
@@ -182,8 +172,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
         icon: "🎉 ",
       });
       setCelebrate(true);
-      isButtonDisabled(true)
-
+      isButtonDisabled(true);
     }
 
     console.log("Error", error);
@@ -192,19 +181,18 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   function comapreLastPoop() {
     const timeNow = new Date();
     const timeNowMin = timeNow.getMinutes();
-    const last_poop_value = lastPoop.getMinutes(); 
-    console.log('na maika ti putkata', timeNowMin, last_poop_value);
+    const last_poop_value = lastPoop.getMinutes();
+    console.log("na maika ti putkata", timeNowMin, last_poop_value);
     const diff = timeNowMin - last_poop_value;
     console.log(diff);
-    setTimeDiff(diff)
+    setTimeDiff(diff);
 
     if (diff >= 25) {
-      console.log("mi moje")
-      setIsButtonDisable(true)
+      console.log("mi moje");
+      setIsButtonDisable(true);
     } else {
-      console.log("ne moje")
-      setIsButtonDisable(false)
-
+      console.log("ne moje");
+      setIsButtonDisable(false);
     }
   }
 
@@ -237,7 +225,14 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
         <h6 className="mb-5">Последни изаквания</h6>
         <RecentsComponent showButton={true} height="10rem" recents={recents} />
       </div>
-      <AddPoopBtn timeDiff={timeDiff} isButtonDisabled={isButtonDisabled} poopType={poopType} setPoopType={setPoopType} session={session} addPoop={addPoop} />
+      <AddPoopBtn
+        timeDiff={timeDiff}
+        isButtonDisabled={isButtonDisabled}
+        poopType={poopType}
+        setPoopType={setPoopType}
+        session={session}
+        addPoop={addPoop}
+      />
     </motion.div>
   );
 };

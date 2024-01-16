@@ -6,8 +6,8 @@
 
 @font-face {
   font-family: 'Stolzl';
-  src: local('MyFont'), url(./assets//fonts/Stolzl-Medium.otf) format('otf');
-  font-weight: medium;
+  src: local('MyFont'), url(./assets/fonts/Stolzl-Medium.otf) format('opentype');
+  font-weight: 500; /* 'medium' is equivalent to 500 in font-weight */
 }
 
 body {
