@@ -13,6 +13,7 @@ import Leaderboard from "./pages/leaderboard";
 import LoadingScreen from "./components/Loading";
 import Recents from "./pages/Recents";
 import { AnimatePresence } from "framer-motion";
+import User from "./pages/User";
 
 const supabase = createClient(
   "https://zyuebxkjnotchjumbrqq.supabase.co",
@@ -78,6 +79,10 @@ export default function App() {
     {
       path: "/recents",
       element: <Recents session={session} />,
+    },
+    {
+      path: "leaderboard/user/:id",
+      element: <User session={session} />,
     },
   ]);
 

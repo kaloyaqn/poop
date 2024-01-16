@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <>
-      <div className="absolute top-0 right-0 w-full bg-red-900 p-2 text-sm text-white text-center font-medium">
+      {/* <div className="absolute top-0 right-0 w-full bg-red-900 p-2 text-sm text-white text-center font-medium">
         Вижте последните промени {" "}
         <a className="font-bold" href="https://arc.net/p/3F4DBB67-4091-4A01-9BAA-607314E73582">тук</a>
-      </div>
+      </div> */}
       <header className="flex justify-between items-center w-full mb-8 mt-2">
         <Link to="/profile">
           <div className="rounded-full w-8 h-8 bg-red-900"></div>

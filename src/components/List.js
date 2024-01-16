@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Moment from "moment";
 import "moment/locale/bg";
 import Avatar from "./Avatar";
+import { Link } from "react-router-dom";
 
 const List = ({ data, index, ListType, avatarUrl, userId }) => {
   // console.log(data);
@@ -77,7 +78,9 @@ const LeaderboardList = ({ data, index, avatarUrl, userId }) => {
 
       <div className="flex items-center ml-4">
         <div className="first-place">
+        <Link to={`user/${data.username}`}>
         <Avatar url={data.avatar_url} size={50} hasUpload={false} />
+        </Link>
 
         </div>
         <div className="ml-3 flex flex-col">

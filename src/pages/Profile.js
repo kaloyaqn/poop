@@ -6,7 +6,6 @@ import Layout from '../components/layout'
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export default function Account({ session }) {
           console.warn(error)
         } else if (data) {
           setUsername(data.username)
-          setWebsite(data.website)
           setAvatarUrl(data.avatar_url)
           console.log(avatar_url)
         }
@@ -51,7 +49,6 @@ export default function Account({ session }) {
     const updates = {
       id: user.id,
       username,
-      website,
       avatar_url,
       updated_at: new Date(),
     }
