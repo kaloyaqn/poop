@@ -22,6 +22,8 @@ const Welcome = ({ session }) => {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
+  //@BojidarC dobavi check dali e updaten
+
   const prevStep = () => {
     setCurrentStep((prevStep) => prevStep - 1);
     console.log(currentStep);

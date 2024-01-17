@@ -104,8 +104,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   const [timeDiff, setTimeDiff] = useState(null);
 
   useEffect(() => {
-    fetchRecents();
-    fetchProfileData();
+    fetchData();
     console.log("session", session);
   }, []);
 
@@ -155,6 +154,20 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
       setUserName(data[0].username);
       setScore(data[0].poop_score);
       setLastPoop(new Date(data[0].last_poop));
+    }
+  }
+
+  async function fetchData() {
+    try {
+      const [recentsResult, profileResult] = await Promise.all([
+        fetchRecents(),
+        fetchProfileData(),
+      ]);
+    
+      setIsLoading(false);
+    } catch (error) {
+      // Handle errors here
+      console.error("Error fetching data:", error);
     }
   }
 
