@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
 import { motion } from "framer-motion";
+import moment from "moment";
 
 const AddPoopBtn = ({
   addPoop,
@@ -8,17 +9,38 @@ const AddPoopBtn = ({
   poopType,
   setPoopType,
   isButtonDisabled,
-  timeDiff,
+  setIsButtonDisable,
+  timeDiff
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState(null);
 
   const poopTypes = ["Нормално", "Гадно", "Течно", "Твърдо"];
-  let wait = 0;
 
-  if (timeDiff) {
-    wait = 25 - timeDiff;
-  }
+
+  const [formattedDuration, setFormattedDuration] = useState('');
+
+  useEffect(() => {
+      let duration = moment.duration(timeDiff, 'minutes');
+
+      const intervalId = setInterval(() => {
+          if (duration.asSeconds() <= 0) {
+              clearInterval(intervalId);
+              console.log("Countdown complete!");
+              setIsButtonDisable(false);
+              
+          } else {
+              const formatted = moment.utc(duration.asMilliseconds()).format('mm:ss');
+              setFormattedDuration(formatted);
+              duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+          }
+      }, 1000);
+
+      return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+  }, [timeDiff]);
+
+
+
 
   return (
     <motion.div
@@ -85,8 +107,8 @@ const AddPoopBtn = ({
           <>
             {isButtonDisabled ? (
               <>
-                <PrimaryBtn onClick={() => setIsOpen(!isOpen)}>
-                  Добави лайно
+                <PrimaryBtn disabled={true} onClick={() => setIsOpen(!isOpen)}>
+                  Можеш да добавиш след {formattedDuration}
                 </PrimaryBtn>
               </>
             ) : (

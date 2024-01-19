@@ -20,7 +20,7 @@ import Recents from "./Recents";
 import RecentsComponent from "../components/Information/RecentsComponent";
 import AddPoopBtn from "../components/Buttons/AddPoopBtn";
 
-import moment from "moment";
+import moment from "moment-timezone";
 import { reload } from "react-router-dom";
 
 export default function Home({ session }) {
@@ -100,7 +100,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   const [celebrate, setCelebrate] = useState(false);
   const [lastPoop, setLastPoop] = useState(null);
   const [poopType, setPoopType] = useState("Нормално"); //twa e state za tipa laino
-  const [isButtonDisabled, setIsButtonDisable] = useState(false);
+  const [isButtonDisabled, setIsButtonDisable] = useState(true);
   const [timeDiff, setTimeDiff] = useState(null);
 
   useEffect(() => {
@@ -133,9 +133,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
 
     if (error === null) {
       setRecents(data);
-      setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
     }
   }
 
@@ -185,29 +183,39 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
         icon: "🎉 ",
       });
       setCelebrate(true);
-      isButtonDisabled(true);
+      setIsButtonDisable(true);
+      comapreLastPoop();
+
     }
 
     console.log("Error", error);
   }
 
   function comapreLastPoop() {
+    // 1. plavni dvijeniq
     const timeNow = new Date();
-    const timeNowMin = timeNow.getMinutes();
-    const last_poop_value = lastPoop.getMinutes();
-    console.log("na maika ti putkata", timeNowMin, last_poop_value);
-    const diff = timeNowMin - last_poop_value;
-    console.log(diff);
-    setTimeDiff(diff);
-
-    if (diff >= 25) {
-      console.log("mi moje");
-      setIsButtonDisable(true);
+    console.log(timeNow)
+    let posledno_laino = moment(lastPoop).tz("UTC+2").toDate(); // Parse the string to a Date object
+    
+    const nextPoopTime = new Date(posledno_laino.getTime() + 25 * 60000);
+    const diff = (nextPoopTime - timeNow) / 60000;
+    console.log(timeNow, nextPoopTime, diff)
+    
+    // 2. trqbva da ste mnogo burz
+    if (Math.abs(diff) >= 25) {
+        console.log("moje", Math.abs(diff), posledno_laino);
+        setTimeDiff(diff)
+        setIsButtonDisable(false);
     } else {
-      console.log("ne moje");
-      setIsButtonDisable(false);
-    }
-  }
+        console.log("cent");
+        setIsButtonDisable(true);
+        setTimeDiff(diff)
+
+    }    
+}
+
+
+
 
   //dobavqme ako v tablica profiles.score
   async function addPoopScore() {
@@ -216,7 +224,11 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
       .update({ poop_score: profileInfo[0].poop_score + 1 })
       .eq("id", userId);
 
-    console.log("dobavqme", error);
+    if (error === null) {
+      fetchProfileData();
+      setIsButtonDisable(true);
+
+    }
   }
 
   return (
@@ -241,6 +253,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
       <AddPoopBtn
         timeDiff={timeDiff}
         isButtonDisabled={isButtonDisabled}
+        setIsButtonDisable={setIsButtonDisable}
         poopType={poopType}
         setPoopType={setPoopType}
         session={session}
