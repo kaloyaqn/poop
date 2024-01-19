@@ -25,67 +25,50 @@ import { reload } from "react-router-dom";
 
 export default function Home({ session }) {
   const userId = session.user.id;
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("tab1");
 
   return (
-    <AnimatePresence mode="wait">
-      {isLoading ? (
-        <motion.div
-          key="loading"
-          initial="initial"
-          animate="animate"
-          exit="exit"
+    <Layout session={session}>
+      <nav className="mb-4 flex flex-row gap-3">
+        <button
+          onClick={() => setActiveTab("tab1")}
+          className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
         >
-          <LoadingScreen />
-        </motion.div>
-      ) : (
-        <Layout session={session}>
-          <nav className="mb-4 flex flex-row gap-3">
-            <button
-              onClick={() => setActiveTab("tab1")}
-              className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
-            >
-              Начало
-            </button>
-            <button
-              onClick={() => setActiveTab("tab2")}
-              className={
-                activeTab ===
-                "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
-                  ? "bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
-                  : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
-              }
-            >
-              Нещо
-            </button>
-            <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
-              Нещо
-            </button>
-            <button
-              className={
-                activeTab ===
-                "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
-                  ? "bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
-                  : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
-              }
-            >
-              Нещо
-            </button>
-          </nav>
+          Начало
+        </button>
+        <button
+          onClick={() => setActiveTab("tab2")}
+          className={
+            activeTab ===
+            "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+              ? "bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
+              : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+          }
+        >
+          Нещо
+        </button>
+        <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
+          Нещо
+        </button>
+        <button
+          className={
+            activeTab ===
+            "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+              ? "bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
+              : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
+          }
+        >
+          Нещо
+        </button>
+      </nav>
 
-          {activeTab === "tab1" ? (
-            <HomePage
-              session={session}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
-          ) : (
-            <Leaderboard />
-          )}
-        </Layout>
-      )}
-    </AnimatePresence>
+      <HomePage
+        session={session}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+      />
+    </Layout>
   );
 }
 
@@ -133,7 +116,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
 
     if (error === null) {
       setRecents(data);
-        setIsLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -161,8 +144,8 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
         fetchRecents(),
         fetchProfileData(),
       ]);
-    
-      setIsLoading(false);
+
+      console.log(isLoading);
     } catch (error) {
       // Handle errors here
       console.error("Error fetching data:", error);
@@ -185,7 +168,6 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
       setCelebrate(true);
       setIsButtonDisable(true);
       comapreLastPoop();
-
     }
 
     console.log("Error", error);
@@ -194,28 +176,24 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   function comapreLastPoop() {
     // 1. plavni dvijeniq
     const timeNow = new Date();
-    console.log(timeNow)
+    console.log(timeNow);
     let posledno_laino = moment(lastPoop).tz("UTC+2").toDate(); // Parse the string to a Date object
-    
+
     const nextPoopTime = new Date(posledno_laino.getTime() + 25 * 60000);
     const diff = (nextPoopTime - timeNow) / 60000;
-    console.log(timeNow, nextPoopTime, diff)
-    
+    console.log(timeNow, nextPoopTime, diff);
+
     // 2. trqbva da ste mnogo burz
     if (Math.abs(diff) >= 25) {
-        console.log("moje", Math.abs(diff), posledno_laino);
-        setTimeDiff(diff)
-        setIsButtonDisable(false);
+      console.log("moje", Math.abs(diff), posledno_laino);
+      setTimeDiff(diff);
+      setIsButtonDisable(false);
     } else {
-        console.log("cent");
-        setIsButtonDisable(true);
-        setTimeDiff(diff)
-
-    }    
-}
-
-
-
+      console.log("cent");
+      setIsButtonDisable(true);
+      setTimeDiff(diff);
+    }
+  }
 
   //dobavqme ako v tablica profiles.score
   async function addPoopScore() {
@@ -227,39 +205,65 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
     if (error === null) {
       fetchProfileData();
       setIsButtonDisable(true);
-
     }
   }
 
   return (
-    <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <Confetti
-        width={width}
-        height={height}
-        numberOfPieces={celebrate ? 200 : 0}
-        recycle={false}
-        onConfettiComplete={(confetti) => {
-          setCelebrate(false);
-          confetti.reset();
-        }}
-      />
+    <AnimatePresence mode="wait">
+      {isLoading ? (
+        <>
+          <motion.div
+            key="loading"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            <LoadingScreen />
+          </motion.div>
+        </>
+      ) : (
+        <>
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <Confetti
+              width={width}
+              height={height}
+              numberOfPieces={celebrate ? 200 : 0}
+              recycle={false}
+              onConfettiComplete={(confetti) => {
+                setCelebrate(false);
+                confetti.reset();
+              }}
+            />
 
-      <div className="bg-white rounded-[20px] p-5 text-[#504A45] transition-transform">
-        <p>Изакано общо</p>
-        <h1 className="text-[#151616] text-3xl font-bold mb-10">{score}</h1>
-        <h6 className="mb-5">Последни изаквания</h6>
-        <RecentsComponent showButton={true} height="10rem" recents={recents} />
-      </div>
-      <AddPoopBtn
-        timeDiff={timeDiff}
-        isButtonDisabled={isButtonDisabled}
-        setIsButtonDisable={setIsButtonDisable}
-        poopType={poopType}
-        setPoopType={setPoopType}
-        session={session}
-        addPoop={addPoop}
-      />
-    </motion.div>
+            <div className="bg-white rounded-[20px] p-5 text-[#504A45] transition-transform">
+              <p>Изакано общо</p>
+              <h1 className="text-[#151616] text-3xl font-bold mb-10">
+                {score}
+              </h1>
+              <h6 className="mb-5">Последни изаквания</h6>
+              <RecentsComponent
+                showButton={true}
+                height="10rem"
+                recents={recents}
+              />
+            </div>
+            <AddPoopBtn
+              timeDiff={timeDiff}
+              isButtonDisabled={isButtonDisabled}
+              setIsButtonDisable={setIsButtonDisable}
+              poopType={poopType}
+              setPoopType={setPoopType}
+              session={session}
+              addPoop={addPoop}
+            />
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 const LeaderboardPage = () => {
