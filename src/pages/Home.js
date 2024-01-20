@@ -23,10 +23,41 @@ import AddPoopBtn from "../components/Buttons/AddPoopBtn";
 import moment from "moment-timezone";
 import { reload } from "react-router-dom";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../components/ui/alert-dialog"
+
+
 export default function Home({ session }) {
   const userId = session.user.id;
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("tab1");
+  const [displayPopUp, setDisplayPopUp] = useState(false);
+  const [userRead, setUserRead] = useState(true); //za modala dava vreme dali butona e disablenat
+
+  const closePopUp = () => {
+    localStorage.setItem("seenPopUp", true);
+    setDisplayPopUp(false);
+  };
+
+
+
+  useEffect(() => {
+    let returningUser = localStorage.getItem("seenPopUp");
+     setDisplayPopUp(!returningUser);
+
+     setTimeout(() => {
+      setUserRead(false)
+     }, 10000)
+  }, []);
 
   return (
     <Layout session={session}>
@@ -46,7 +77,7 @@ export default function Home({ session }) {
               : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
           }
         >
-          Нещо
+          История
         </button>
         <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
           Нещо
@@ -62,6 +93,20 @@ export default function Home({ session }) {
           Нещо
         </button>
       </nav>
+
+      <AlertDialog open={displayPopUp} onOpenChange={setDisplayPopUp}>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Край на тестовия период 🎉</AlertDialogTitle>
+      <AlertDialogDescription>
+          Изсиранията и историята на изсиране са <span className="font-bold">изтрити</span> на всички участници. Всички, които са се регистрирали по време на тестовия период ще получат <span className="font-bold">специален бадж</span>. Благодарим ви от екипа на Poop, приятно насиране 💩.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <PrimaryBtn disabled={userRead} onClick={() => closePopUp()}>Разбрах</PrimaryBtn>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
 
       <HomePage
         session={session}

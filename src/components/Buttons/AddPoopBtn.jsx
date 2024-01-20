@@ -10,37 +10,32 @@ const AddPoopBtn = ({
   setPoopType,
   isButtonDisabled,
   setIsButtonDisable,
-  timeDiff
+  timeDiff,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState(null);
 
   const poopTypes = ["Нормално", "Гадно", "Течно", "Твърдо"];
 
-
-  const [formattedDuration, setFormattedDuration] = useState('');
+  const [formattedDuration, setFormattedDuration] = useState("");
 
   useEffect(() => {
-      let duration = moment.duration(timeDiff, 'minutes');
+    let duration = moment.duration(timeDiff, "minutes");
 
-      const intervalId = setInterval(() => {
-          if (duration.asSeconds() <= 0) {
-              clearInterval(intervalId);
-              console.log("Countdown complete!");
-              setIsButtonDisable(false);
-              
-          } else {
-              const formatted = moment.utc(duration.asMilliseconds()).format('mm:ss');
-              setFormattedDuration(formatted);
-              duration = moment.duration(duration.asSeconds() - 1, 'seconds');
-          }
-      }, 1000);
+    const intervalId = setInterval(() => {
+      if (duration.asSeconds() <= 0) {
+        clearInterval(intervalId);
+        console.log("Countdown complete!");
+        setIsButtonDisable(false);
+      } else {
+        const formatted = moment.utc(duration.asMilliseconds()).format("mm:ss");
+        setFormattedDuration(formatted);
+        duration = moment.duration(duration.asSeconds() - 1, "seconds");
+      }
+    }, 1000);
 
-      return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
   }, [timeDiff]);
-
-
-
 
   return (
     <motion.div
