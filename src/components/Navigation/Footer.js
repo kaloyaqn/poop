@@ -28,6 +28,7 @@ const Footer = () => {
           />
         </svg>
       </a>
+      <span>Версия 1.0.0</span>
       <Link to="/leaderboard">
         <svg
           xmlns="http://www.w3.org/2000/svg"
