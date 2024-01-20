@@ -85,6 +85,8 @@ const LeaderboardList = ({ data, index, avatarUrl, userId, loading }) => {
     } else {
       setScoreText(`${poop_score} лайна`);
     }
+
+    console.log(data.is_beta_tester)
   }, [poop_score]);
 
   useEffect(() => {
@@ -109,12 +111,15 @@ const LeaderboardList = ({ data, index, avatarUrl, userId, loading }) => {
               <div className="first-place">
                 <Drawer>
                   <DrawerTrigger asChild>
-                    <button variant="outline">
+                    <button variant="outline" className="relative">
                       <Avatar
                         url={data.avatar_url}
                         size={50}
                         hasUpload={false}
                       />
+                      {data.is_beta_tester ? <span className="absolute bottom-[-8px] right-[-4px] bg-white px-1.5 text-xs rounded-full border-[1px] border-[#C8986C]">
+                      beta
+                        </span> : <></>}
                     </button>
                   </DrawerTrigger>
                   <DrawerContent>

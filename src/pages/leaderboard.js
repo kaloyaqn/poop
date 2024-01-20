@@ -14,7 +14,7 @@ const Leaderboard = ({ session }) => {
   async function fetchUsers() {
     const { data, error } = await supabase
       .from("profiles")
-      .select("poop_score, username, avatar_url, id")
+      .select("poop_score, username, avatar_url, is_beta_tester")
       .order("poop_score", { ascending: false });
 
     // console.log(data);
