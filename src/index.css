@@ -59,7 +59,6 @@ html {
 }
 
 .parent[data-isOpen="true"] {
-  height: 200px !important;
 }
 
 code {
@@ -74,6 +73,12 @@ code {
 
 .first-place {
   
+}
+
+textarea {
+  padding: .5rem;
+  border: 1px solid #5B3410;
+  border-radius: 8px;
 }
 
 @layer base {

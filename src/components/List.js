@@ -47,7 +47,7 @@ const RecentList = ({ data }) => {
           {data.type}
         </h6>
         <span className="text-[#655D56] text-sm m-0 p-0">
-          {data.user} ·{" "}
+          {data.username} ·{" "}
           {Moment(data.created_at).locale("bg").format("D MMM h:mm")}ч.
         </span>
       </div>
@@ -56,7 +56,7 @@ const RecentList = ({ data }) => {
   );
 };
 
-const LeaderboardList = ({ data, index, avatarUrl, userId, loading }) => {
+const LeaderboardList = ({ data, index, userId, loading }) => {
   const [scoreText, setScoreText] = useState(null);
   const [isYou, setIsYou] = useState(false);
   const [bgColor, setBgColor] = useState("none");

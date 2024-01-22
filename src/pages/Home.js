@@ -33,14 +33,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../components/ui/alert-dialog"
+} from "../components/ui/alert-dialog";
 
-import Pruc from "../components/Views/Pruc"
-
+import Pruc from "../components/Views/Pruc";
 
 export default function Home({ session }) {
   const userId = session.user.id;
   const [isLoading, setIsLoading] = useState(true);
+  const [recents, setRecents] = useState([]);
   const [activeTab, setActiveTab] = useState("tab1");
   const [displayPopUp, setDisplayPopUp] = useState(false);
   const [userRead, setUserRead] = useState(true); //za modala dava vreme dali butona e disablenat
@@ -50,15 +50,29 @@ export default function Home({ session }) {
     setDisplayPopUp(false);
   };
 
+  async function fetchRecents() {
+    const { data, error } = await supabase
+      .from("poops")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(20);
 
+    // console.log(data);
+    // console.log(error);
+
+    if (error === null) {
+      setRecents(data);
+      setIsLoading(false);
+    }
+  }
 
   useEffect(() => {
     let returningUser = localStorage.getItem("seenPopUp");
-     setDisplayPopUp(!returningUser);
-
-     setTimeout(() => {
-      setUserRead(false)
-     }, 10000)
+    setDisplayPopUp(!returningUser);
+    fetchRecents();
+    setTimeout(() => {
+      setUserRead(false);
+    }, 10000);
   }, []);
 
   return (
@@ -97,38 +111,43 @@ export default function Home({ session }) {
       </nav>
 
       <AlertDialog open={displayPopUp} onOpenChange={setDisplayPopUp}>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Край на тестовия период 🎉</AlertDialogTitle>
-      <AlertDialogDescription>
-          Изсиранията и историята на изсиране са <span className="font-bold">изтрити</span> на всички участници. Всички, които са се регистрирали по време на тестовия период ще получат <span className="font-bold">специален бадж</span>. Благодарим ви от екипа на Poop, приятно насиране 💩.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <PrimaryBtn disabled={userRead} onClick={() => closePopUp()}>Разбрах</PrimaryBtn>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Край на тестовия период 🎉</AlertDialogTitle>
+            <AlertDialogDescription>
+              Изсиранията и историята на изсиране са{" "}
+              <span className="font-bold">изтрити</span> на всички участници.
+              Всички, които са се регистрирали по време на тестовия период ще
+              получат <span className="font-bold">специален бадж</span>.
+              Благодарим ви от екипа на Poop, приятно насиране 💩.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <PrimaryBtn disabled={userRead} onClick={() => closePopUp()}>
+              Разбрах
+            </PrimaryBtn>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {activeTab === "tab1" && (
-              <HomePage
-              session={session}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
+        <HomePage
+          session={session}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          recents={recents}
+          fetchRecents={fetchRecents}
+        />
       )}
-            {activeTab === "tab2" && (
-              <Pruc />
-      )}
+      {activeTab === "tab2" && <Pruc session={session} recents={recents} />}
     </Layout>
   );
 }
 
-const HomePage = ({ session, isLoading, setIsLoading }) => {
+const HomePage = ({ session, isLoading, setIsLoading, recents, fetchRecents }) => {
   const userId = session.user.id;
 
   const { width, height } = useWindowSize();
-  const [recents, setRecents] = useState([]);
   const [profileInfo, setProfileInfo] = useState([]);
   const [username, setUserName] = useState([]);
   const [score, setScore] = useState(0);
@@ -137,6 +156,7 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   const [poopType, setPoopType] = useState("Нормално"); //twa e state za tipa laino
   const [isButtonDisabled, setIsButtonDisable] = useState(true);
   const [timeDiff, setTimeDiff] = useState(null);
+  const [freeText, setFreeText] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -155,22 +175,6 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
     // You can set a timeout to stop the confetti after a certain duration
     setTimeout(() => setCelebrate(false), 5000); // 5000 milliseconds (5 seconds) in this example
   };
-
-  async function fetchRecents() {
-    const { data, error } = await supabase
-      .from("poops")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(20);
-
-    // console.log(data);
-    // console.log(error);
-
-    if (error === null) {
-      setRecents(data);
-      setIsLoading(false);
-    }
-  }
 
   //fetchvame data za profila ot tablica profiles
   async function fetchProfileData() {
@@ -193,7 +197,6 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   async function fetchData() {
     try {
       const [recentsResult, profileResult] = await Promise.all([
-        fetchRecents(),
         fetchProfileData(),
       ]);
 
@@ -208,11 +211,10 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
   async function addPoop() {
     const { error } = await supabase
       .from("poops")
-      .insert({ user: username, type: poopType });
+      .insert({ type: poopType, user_id: userId, free_text: freeText, username: username });
 
     if (error === null) {
       addPoopScore();
-      fetchRecents();
       setScore(score + 1);
       toast.success("Честито изакване", {
         icon: "🎉 ",
@@ -311,6 +313,8 @@ const HomePage = ({ session, isLoading, setIsLoading }) => {
               setPoopType={setPoopType}
               session={session}
               addPoop={addPoop}
+              freeText={freeText}
+              setFreeText={setFreeText}
             />
           </motion.div>
         </>

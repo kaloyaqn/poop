@@ -11,6 +11,8 @@ const AddPoopBtn = ({
   isButtonDisabled,
   setIsButtonDisable,
   timeDiff,
+  freeText,
+  setFreeText,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState(null);
@@ -71,9 +73,6 @@ const AddPoopBtn = ({
         </motion.div>
       </motion.div>
       <motion.div layout className="child">
-        {/* {isOpen && (
-            <>na maika ti putkata</>
-        )} */}
         {isOpen ? (
           <>
             <div className="flex gap-3 mb-4">
@@ -89,6 +88,8 @@ const AddPoopBtn = ({
                 </div>
               ))}
             </div>
+            <textarea placeholder="tekst" className="w-full mb-4" value={freeText} onChange={(e) => setFreeText(e.target.value)}/>
+
             <PrimaryBtn
               onClick={() => {
                 addPoop();
