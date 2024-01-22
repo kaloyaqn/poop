@@ -35,6 +35,8 @@ import {
   AlertDialogTrigger,
 } from "../components/ui/alert-dialog"
 
+import Pruc from "../components/Views/Pruc"
+
 
 export default function Home({ session }) {
   const userId = session.user.id;
@@ -61,7 +63,7 @@ export default function Home({ session }) {
 
   return (
     <Layout session={session}>
-      <nav className="mb-4 flex flex-row gap-3">
+      <nav className="mb-4 flex flex-row gap-3 overflow-x-auto">
         <button
           onClick={() => setActiveTab("tab1")}
           className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
@@ -77,7 +79,7 @@ export default function Home({ session }) {
               : "rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]"
           }
         >
-          История
+          Пръц
         </button>
         <button className="rounded-full pt-[10px] pb-[10px] p-4 text-sm text-[#56655D]">
           Нещо
@@ -108,11 +110,16 @@ export default function Home({ session }) {
   </AlertDialogContent>
 </AlertDialog>
 
-      <HomePage
-        session={session}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-      />
+      {activeTab === "tab1" && (
+              <HomePage
+              session={session}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+      )}
+            {activeTab === "tab2" && (
+              <Pruc />
+      )}
     </Layout>
   );
 }
