@@ -10,7 +10,7 @@ export default function PrucBox({ recent, users }) {
           <Avatar url={""} size={50} hasUpload={false} />
         </div>
         <div className="flex flex-col">
-          <h5 className="text-sm font-medium manrope text-[#161515]">
+          <h5 className="text-sm font-bold manrope text-[#161515]">
                         {recent.username && (
                 <>{recent.username}</>
             )}
