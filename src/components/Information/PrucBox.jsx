@@ -1,3 +1,4 @@
+import moment from "moment";
 import { supabase } from "../../lib/supabase";
 import Avatar from "../Avatar";
 
@@ -15,7 +16,8 @@ export default function PrucBox({ recent, users }) {
             )}
           </h5>
           <span className="leading-3 text-xs manrope font-semibold text-[#655D56]">
-            4 мин.
+            {/* 4z {recent.created_at} */}
+            {moment(recent.created_at).startOf('hour').fromNow() }
           </span>
         </div>
       </div>

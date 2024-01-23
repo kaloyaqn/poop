@@ -222,6 +222,7 @@ const HomePage = ({ session, isLoading, setIsLoading, recents, fetchRecents }) =
       setCelebrate(true);
       setIsButtonDisable(true);
       comapreLastPoop();
+      fetchRecents();
     }
 
     console.log("Error", error);
