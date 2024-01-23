@@ -63,8 +63,8 @@ export default function Avatar({ url, size, onUpload, hasUpload }) {
       )}
     {hasUpload && (
               <div style={{ width: size }}>
-              <label className="button primary block" htmlFor="single">
-                {uploading ? 'Uploading ...' : 'Upload'}
+              <label className="button primary block p-2 bg-[#C8986C] rounded-[8px] text-center text-[#4F2700] mt-2 mb-4" htmlFor="single">
+                {uploading ? 'Избиране...' : 'Избери снимка'}
               </label>
               <input
                 style={{

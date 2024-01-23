@@ -1,113 +1,145 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
-import Avatar from '../components/Avatar'
-import Layout from '../components/layout'
+import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabase";
+import Avatar from "../components/Avatar";
+import Layout from "../components/layout";
+import PrimaryBtn from "../components/Buttons/PrimaryBtn";
 
 export default function Account({ session }) {
-  const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState(null);
+  const [avatar_url, setAvatarUrl] = useState(null);
 
   useEffect(() => {
-    let ignore = false
+    let ignore = false;
     async function getProfile() {
-      setLoading(true)
-      const { user } = session
+      setLoading(true);
+      const { user } = session;
 
       const { data, error } = await supabase
-        .from('profiles')
+        .from("profiles")
         .select(`username, avatar_url`)
-        .eq('id', user.id)
-        .single()
+        .eq("id", user.id)
+        .single();
 
       if (!ignore) {
         if (error) {
-          console.warn(error)
+          console.warn(error);
         } else if (data) {
-          setUsername(data.username)
-          setAvatarUrl(data.avatar_url)
-          console.log(avatar_url)
+          setUsername(data.username);
+          setAvatarUrl(data.avatar_url);
+          console.log(avatar_url);
         }
       }
 
-      setLoading(false)
+      setLoading(false);
     }
 
-    getProfile()
+    getProfile();
 
     return () => {
-      ignore = true
-    }
-  }, [session])
+      ignore = true;
+    };
+  }, [session]);
 
   async function updateProfile(event, avatarUrl) {
-    event.preventDefault()
+    event.preventDefault();
 
-    setLoading(true)
-    const { user } = session
+    setLoading(true);
+    const { user } = session;
 
     const updates = {
       id: user.id,
       username,
       avatar_url,
       updated_at: new Date(),
-    }
+    };
 
-    const { error } = await supabase.from('profiles').upsert(updates)
+    const { error } = await supabase.from("profiles").upsert(updates);
 
     if (error) {
-      alert(error.message)
+      alert(error.message);
     } else {
-      setAvatarUrl(avatarUrl)
+      setAvatarUrl(avatarUrl);
     }
-    setLoading(false)
+    setLoading(false);
   }
-
-  
 
   return (
     <Layout>
-         <form onSubmit={updateProfile} className="form-widget">
-            <Avatar
-      url={avatar_url}
-      size={150}
-      hasUpload={true}
-      onUpload={(event, url) => {
-        updateProfile(event, url)
-      }}
-    />
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Name</label>
-        <input
-          id="username"
-          type="text"
-          required
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
+      <form onSubmit={updateProfile} className="form-widget">
+        <div className="w-full grid items-center justify-center">
+        <Avatar
+          url={avatar_url}
+          size={150}
+          hasUpload={true}
+          onUpload={(event, url) => {
+            updateProfile(event, url);
+          }}
         />
-      </div>
-      <div>
-        <button className="button block primary" type="submit" disabled={loading}>
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
+        </div>
 
-      <div>
-      <button
-        className="bg-red-900"
-        onClick={() => {
-          const { error } = supabase.auth.signOut();
+        <div className="mb-3">
+          <label
+            for="small-input"
+            class="block mb text- font-medium text-gray-900 dark:text-white manrope"
+          >
+            Имейл
+          </label>
+          <input
+            disabled
+            type="text"
+            value={session.user.email}
+            id="small-input"
+            class="block w-full p-2 text-[#655D56]  manrope border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-[#6A3A0B] focus:border-[#C8986C]"
+          />
+        </div>
+        {/* <div>
+          <label htmlFor="username">Name</label>
+          <input
+            id="username"
+            type="text"
+            required
+            value={username || ""}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div> */}
+        <div className="">
+          <label
+            for="small-input"
+            class="block mb text- font-medium text-gray-900 dark:text-white manrope"
+          >
+            Псевдоним
+          </label>
+          <input
+            
+            type="text"
+            id="small-input"
+            value={username || ""}
+            onChange={(e) => setUsername(e.target.value)} 
+            class="block w-full p-2 text-[#655D56]  manrope border transition border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-[#6A3A0B] focus:border-[#6A3A0B]"
+          />
+        </div>
+        <div>
+          <PrimaryBtn
+            className="button block primary mt-4 p-2"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Обновяване..." : "Обнови"}
+          </PrimaryBtn>
+        </div>
 
-        }}
-      >
-        izlez
-      </button>
-      </div>
-    </form>
+        <div className="absolute bottom-[100px] w-full left-0 px-[20px]">
+          <button
+            className="bg-red-200 w-full p-2 text-sm rounded-[8px]"
+            onClick={() => {
+              const { error } = supabase.auth.signOut();
+            }}
+          >
+            Излез 
+          </button>
+        </div>
+      </form>
     </Layout>
-  )
+  );
 }
