@@ -44,10 +44,10 @@ const RecentList = ({ data }) => {
     <div className="flex justify-between">
       <div>
         <h6 className="font-semibold text-[#161515] mb-0 p-0 leading-4">
-          {data.type}
+          {data.username}
         </h6>
         <span className="text-[#655D56] text-sm m-0 p-0">
-          {data.username} ·{" "}
+          {data.type} ·{" "}
           {Moment(data.created_at).locale("bg").format("D MMM h:mm")}ч.
         </span>
       </div>
