@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PrimaryBtn from "./PrimaryBtn";
 import { motion } from "framer-motion";
 import moment from "moment";
+import { Textarea } from "../ui/textarea";
 
 const AddPoopBtn = ({
   addPoop,
@@ -77,18 +78,18 @@ const AddPoopBtn = ({
           <>
             <div className="flex gap-3 mb-4">
               {poopTypes.map((type) => (
-                <div
+                <button
                   key={type}
-                  className={`rounded-full bg-yellow-300 p-2 text-sm cursor-pointer ${
-                    poopType === type ? "bg-blue-500 text-white" : ""
+                  className={`rounded-full ] p-2 text-sm cursor-pointer transition ${
+                    poopType === type ? "bg-[#6A3A0B] text-white focus:z-10 focus:ring-2 focus:ring-[#C8986C]" : "bg-[#C8986C] text-[#4F2700]"
                   }`}
                   onClick={() => setPoopType(type)}
                 >
                   {type}
-                </div>
+                </button>
               ))}
             </div>
-            <textarea placeholder="tekst" className="w-full mb-4" value={freeText} onChange={(e) => setFreeText(e.target.value)}/>
+            <textarea name="free_text" placeholder="Какво имате да кажете по темата?" className="w-full mb-4 text-sm" value={freeText} onChange={(e) => setFreeText(e.target.value)}/>
 
             <PrimaryBtn
               onClick={() => {
