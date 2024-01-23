@@ -81,7 +81,7 @@ const AddPoopBtn = ({
                 <button
                   key={type}
                   className={`rounded-full ] p-2 text-sm cursor-pointer transition ${
-                    poopType === type ? "bg-[#6A3A0B] text-white focus:z-10 focus:ring-2 focus:ring-[#C8986C]" : "bg-[#C8986C] text-[#4F2700]"
+                    poopType === type ? "bg-[#6A3A0B] text-white z-10 ring-2 ring-[#C8986C] hover:z-10 hover:ring-2 hover:ring-[#C8986C]" : "bg-[#C8986C] text-[#4F2700]"
                   }`}
                   onClick={() => setPoopType(type)}
                 >

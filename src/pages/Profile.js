@@ -67,7 +67,7 @@ export default function Account({ session }) {
   return (
     <Layout>
       <form onSubmit={updateProfile} className="form-widget">
-        <div className="w-full grid items-center justify-center">
+        <div className="w-full flex items-center justify-center">
         <Avatar
           url={avatar_url}
           size={150}
@@ -75,6 +75,8 @@ export default function Account({ session }) {
           onUpload={(event, url) => {
             updateProfile(event, url);
           }}
+          setAvatarUrl={setAvatarUrl}
+          avatarUrl={avatar_url}
         />
         </div>
 

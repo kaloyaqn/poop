@@ -1,51 +1,55 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
 
 export default function Avatar({ url, size, onUpload, hasUpload }) {
-  const [avatarUrl, setAvatarUrl] = useState(null)
-  const [uploading, setUploading] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    if (url) downloadImage(url)
-  }, [url])
+    if (url) downloadImage(url);
+  }, [url]);
 
   async function downloadImage(path) {
     try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
+      const { data, error } = await supabase.storage
+        .from("avatars")
+        .download(path);
       if (error) {
-        throw error
+        throw error;
       }
-      const url = URL.createObjectURL(data)
-      setAvatarUrl(url)
+      const url = URL.createObjectURL(data);
+      setAvatarUrl(url);
     } catch (error) {
-      console.log('Error downloading image: ', error.message)
+      console.log("Error downloading image: ", error.message);
     }
   }
 
   async function uploadAvatar(event) {
     try {
-      setUploading(true)
+      setUploading(true);
 
       if (!event.target.files || event.target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
+        throw new Error("You must select an image to upload.");
       }
 
-      const file = event.target.files[0]
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random()}.${fileExt}`
-      const filePath = `${fileName}`
+      const file = event.target.files[0];
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
 
-      const { error: uploadError } = await supabase.storage.from('avatars').upload(filePath, file)
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file);
 
       if (uploadError) {
-        throw uploadError
+        throw uploadError;
       }
 
-      onUpload(event, filePath)
+      onUpload(event, filePath);
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
   }
 
@@ -59,26 +63,33 @@ export default function Avatar({ url, size, onUpload, hasUpload }) {
           style={{ height: size, width: size }}
         />
       ) : (
-        <img width={size} src='https://zyuebxkjnotchjumbrqq.supabase.co/storage/v1/object/sign/avatars/no-pfp.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL25vLXBmcC5wbmciLCJpYXQiOjE3MDQ4ODM5NjQsImV4cCI6MzE3MDMzMzQ3OTY0fQ.m3t5h0_kZISDTN2EY0FSfpofpDhSgx0f73cocYGkFNA&t=2024-01-10T10%3A52%3A44.689Z' alt='Няма синмка'/>
+        <img
+          width={size}
+          src="https://zyuebxkjnotchjumbrqq.supabase.co/storage/v1/object/sign/avatars/no-pfp.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhdmF0YXJzL25vLXBmcC5wbmciLCJpYXQiOjE3MDQ4ODM5NjQsImV4cCI6MzE3MDMzMzQ3OTY0fQ.m3t5h0_kZISDTN2EY0FSfpofpDhSgx0f73cocYGkFNA&t=2024-01-10T10%3A52%3A44.689Z"
+          alt="Няма синмка"
+        />
       )}
-    {hasUpload && (
-              <div style={{ width: size }}>
-              <label className="button primary block p-2 bg-[#C8986C] rounded-[8px] text-center text-[#4F2700] mt-2 mb-4" htmlFor="single">
-                {uploading ? 'Избиране...' : 'Избери снимка'}
-              </label>
-              <input
-                style={{
-                  visibility: 'hidden',
-                  position: 'absolute',
-                }}
-                type="file"
-                id="single"
-                accept="image/*"
-                onChange={uploadAvatar}
-                disabled={uploading}
-              />
-            </div>
-    )}
+      {hasUpload && (
+        <div style={{ width: size }}>
+          <label
+            className="button primary block p-2 bg-[#C8986C] rounded-[8px] text-center text-[#4F2700] mt-2 mb-4"
+            htmlFor="single"
+          >
+            {uploading ? "Избиране..." : "Избери снимка"}
+          </label>
+          <input
+            style={{
+              visibility: "hidden",
+              position: "absolute",
+            }}
+            type="file"
+            id="single"
+            accept="image/*"
+            onChange={uploadAvatar}
+            disabled={uploading}
+          />
+        </div>
+      )}
     </div>
-  )
+  );
 }
