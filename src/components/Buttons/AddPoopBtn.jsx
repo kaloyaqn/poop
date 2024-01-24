@@ -65,7 +65,7 @@ const AddPoopBtn = ({
           </svg>
         </motion.div>
         <motion.div layout>
-          <p className="text-[#151616] font-medium leading-4">
+          <p className="text-[#151616] font-medium leading-4 w-xs:bg-red-500">
             Готов ли си да се изакаш?
           </p>
           <span className="text-[#655D56] text-[14px]">

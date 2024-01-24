@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import Avatar from "../components/Avatar";
 import Layout from "../components/layout";
 import PrimaryBtn from "../components/Buttons/PrimaryBtn";
+import toast from "react-hot-toast";
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true);
@@ -60,6 +61,7 @@ export default function Account({ session }) {
       alert(error.message);
     } else {
       setAvatarUrl(avatarUrl);
+      toast.success("Успешно обновихте профила си")
     }
     setLoading(false);
   }
