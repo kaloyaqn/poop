@@ -36,12 +36,13 @@ import {
 } from "../components/ui/alert-dialog";
 
 import Pruc from "../components/Views/Pruc";
+import Tabs from "../components/Navigation/Tabs";
 
 export default function Home({ session }) {
   const userId = session.user.id;
   const [isLoading, setIsLoading] = useState(true);
   const [recents, setRecents] = useState([]);
-  const [activeTab, setActiveTab] = useState("tab1");
+  const [activeTab, setActiveTab] = useState("1");
   const [displayPopUp, setDisplayPopUp] = useState(false);
   const [userRead, setUserRead] = useState(true); //za modala dava vreme dali butona e disablenat
 
@@ -77,7 +78,7 @@ export default function Home({ session }) {
 
   return (
     <Layout session={session}>
-      <nav className="mb-4 flex flex-row gap-3 overflow-x-auto">
+      {/* <nav className="mb-4 flex flex-row gap-3 overflow-x-auto">
         <button
           onClick={() => setActiveTab("tab1")}
           className="bg-white rounded-full border-[1px] border-[#F0F0F0] pt-[10px] pb-[10px] p-4 text-sm"
@@ -108,8 +109,16 @@ export default function Home({ session }) {
         >
           Нещо
         </button>
-      </nav>
-
+      </nav> */}
+      <Tabs
+        setActiveTab={setActiveTab}
+        items={[
+          { to: "1", name: "Начало" },
+          { to: "2", name: "Пръц" },
+          { to: "3", name: "Нещо" },
+          { to: "4", name: "Нещо" }
+        ]}
+      />
       <AlertDialog open={displayPopUp} onOpenChange={setDisplayPopUp}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -130,7 +139,7 @@ export default function Home({ session }) {
         </AlertDialogContent>
       </AlertDialog>
 
-      {activeTab === "tab1" && (
+      {activeTab === "1" && (
         <HomePage
           session={session}
           isLoading={isLoading}
@@ -139,7 +148,7 @@ export default function Home({ session }) {
           fetchRecents={fetchRecents}
         />
       )}
-      {activeTab === "tab2" && <Pruc session={session} recents={recents} />}
+      {activeTab === "2" && <Pruc session={session} recents={recents} />}
     </Layout>
   );
 }
