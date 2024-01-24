@@ -4,6 +4,7 @@ import Header from "./Navigation/Header";
 import Footer from "./Navigation/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const Layout = ({ children, session }) => {
   return (
@@ -13,6 +14,7 @@ const Layout = ({ children, session }) => {
       <main>
         {children}
         <Analytics />
+        <SpeedInsights />
       </main>
       <Footer />
     </>
