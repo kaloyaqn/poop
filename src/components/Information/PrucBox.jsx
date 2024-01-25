@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import Avatar from "../Avatar";
 
-export default function PrucBox({ recent, user, session }) {
+export default function PrucBox({ recent, user, session, fetchRecents }) {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [likesClient, setLikesClient] = useState(0);
   const [isLiked, setIsLiked] = useState();
@@ -78,7 +78,10 @@ export default function PrucBox({ recent, user, session }) {
       setLikesClient(likesClient - 1)
       setIsLiked(false);
     }
+
     }
+
+    fetchRecents();
   }
 
   return (
@@ -121,7 +124,7 @@ export default function PrucBox({ recent, user, session }) {
           </svg>
         </button>
 
-        <span className="text-sm">{likesClient}</span>
+        <span className="text-sm">{recent.likes}</span>
       </div>
     </div>
   );

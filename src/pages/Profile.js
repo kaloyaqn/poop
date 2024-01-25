@@ -141,7 +141,7 @@ export default function Account({ session }) {
 
 
         <a href="https://n383msp4fjw.typeform.com/to/oiIn9gVb">
-        <button onClick={() => seIsReportOpened(!isReportOpened)} className="bg-yellow-200 w-full p-2 rounded-[8px]">Докладвай проблем</button>
+        <button onClick={() => seIsReportOpened(false)} className="bg-yellow-200 w-full p-2 rounded-[8px]">Докладвай проблем</button>
 
         </a>
 
