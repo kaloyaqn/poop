@@ -63,7 +63,6 @@ export default function Truc({ session, recents, fetchRecents }) {
           <AlertDialogHeader>
             <AlertDialogTitle>Вече има лайкове 🎉</AlertDialogTitle>
             <AlertDialogDescription>
-              Изсиранията и историята на изсиране са{" "}
               <span className="font-bold">Бета</span> версия на лайковете в <span className="font-bold">"Пръц"</span> е вече тук.
               Ако изпитате затруднения или намерите проблем може да пишете от бутон <span className="font-bold">"Докладвай проблем"</span> от менюто в профила.
             </AlertDialogDescription>
