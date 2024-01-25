@@ -34,7 +34,7 @@ export default function Truc({ session, recents }) {
           {/* Find the corresponding user for the recent item based on user_id */}
           {users.map((user) => {
             if (user.id === recent.user_id) {
-              return <PrucBox key={recent.index} user={user} recent={recent} />;
+              return <PrucBox key={recent.index} user={user} recent={recent} session={session}/>;
             }
             return null;
           })}

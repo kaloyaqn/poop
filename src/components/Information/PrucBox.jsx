@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import Avatar from "../Avatar";
 
-export default function PrucBox({ recent, user }) {
+export default function PrucBox({ recent, user, session }) {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [likesClient, setLikesClient] = useState(0);
   const [isLiked, setIsLiked] = useState();
@@ -39,7 +39,8 @@ export default function PrucBox({ recent, user }) {
   console.log(recent.id);
 
   async function Like() {
-    if (isLiked === true) {
+    if (isLiked === true) 
+    {
       setLikesClient(likesClient - 1)
       setIsLiked(false);
 
@@ -57,14 +58,17 @@ export default function PrucBox({ recent, user }) {
     }
     setLikesClient(likesClient - 1)
     setIsLiked(false);
-    } else {
+
+    } 
+    else 
+    {
 
       setLikesClient(likesClient + 1)
       setIsLiked(true);
 
       const { data, error } = await supabase
       .from("poops")
-      .update({ likes: recent.likes + 1 })
+      .update({ likes: recent.likes + 1, liked_by: `{${session.user.id}}` })
       .eq("id", recent.id);
 
       console.log(data)
