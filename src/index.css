@@ -85,6 +85,15 @@ textarea {
   border-radius: 8px;
 }
 
+.ptr {
+  position: inherit !important;
+}
+
+.ptr, .ptr__children {
+  position: inherit !important;
+
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
