@@ -144,7 +144,7 @@ export default function Home({ session }) {
       </AlertDialog>
 
       {activeTab === "1" && (
-        <PullToRefresh onRefresh={fetchRecents}>
+        <PullToRefresh pullingContent={<></>} onRefresh={fetchRecents}>
                   <HomePage
           session={session}
           isLoading={isLoading}
@@ -157,7 +157,7 @@ export default function Home({ session }) {
 
       )}
       {activeTab === "2" && 
-      <PullToRefresh onRefresh={fetchRecents}>
+      <PullToRefresh pullingContent={<></>} onRefresh={fetchRecents}>
         <Pruc session={session} fetchRecents={fetchRecents} recents={recents} />
         </PullToRefresh>}
     </Layout>

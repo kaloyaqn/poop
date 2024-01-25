@@ -56,7 +56,7 @@ const Leaderboard = ({ session }) => {
 
   return (
     <Layout>
-      <PullToRefresh onRefresh={fetchUsers} className="flex flex-col gap-1">
+      <PullToRefresh onRefresh={fetchUsers} pullingContent={<></>} className="flex flex-col gap-1">
         {users.map((user, index) => (
           <div key={user.index}>
             {loading ? (
