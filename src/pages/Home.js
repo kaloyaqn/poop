@@ -38,6 +38,9 @@ import {
 import Pruc from "../components/Views/Pruc";
 import Tabs from "../components/Navigation/Tabs";
 
+import PullToRefresh from 'react-simple-pull-to-refresh';
+
+
 export default function Home({ session }) {
   const userId = session.user.id;
   const [isLoading, setIsLoading] = useState(true);
@@ -75,6 +78,7 @@ export default function Home({ session }) {
       setUserRead(false);
     }, 10000);
   }, []);
+
 
   return (
     <Layout session={session}>
@@ -140,15 +144,22 @@ export default function Home({ session }) {
       </AlertDialog>
 
       {activeTab === "1" && (
-        <HomePage
+        <PullToRefresh onRefresh={fetchRecents}>
+                  <HomePage
           session={session}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           recents={recents}
           fetchRecents={fetchRecents}
         />
+
+        </PullToRefresh>
+
       )}
-      {activeTab === "2" && <Pruc session={session} fetchRecents={fetchRecents} recents={recents} />}
+      {activeTab === "2" && 
+      <PullToRefresh onRefresh={fetchRecents}>
+        <Pruc session={session} fetchRecents={fetchRecents} recents={recents} />
+        </PullToRefresh>}
     </Layout>
   );
 }

@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabase";
 import List from "../components/List";
 import { Skeleton } from "../components/ui/skeleton";
 import { AnimatePresence, motion } from "framer-motion";
+import PullToRefresh from "react-simple-pull-to-refresh"
 
 const Leaderboard = ({ session }) => {
   const [users, setUsers] = useState([]);
@@ -55,7 +56,7 @@ const Leaderboard = ({ session }) => {
 
   return (
     <Layout>
-      <div className="flex flex-col gap-1">
+      <PullToRefresh onRefresh={fetchUsers} className="flex flex-col gap-1">
         {users.map((user, index) => (
           <div key={user.index}>
             {loading ? (
@@ -85,7 +86,7 @@ const Leaderboard = ({ session }) => {
             )}
           </div>
         ))}
-      </div>
+      </PullToRefresh>
     </Layout>
   );
 };
