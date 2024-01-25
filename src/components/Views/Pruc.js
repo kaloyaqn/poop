@@ -14,7 +14,7 @@ import {
 } from "../ui/alert-dialog";
 import PrimaryBtn from "../Buttons/PrimaryBtn";
 
-export default function Truc({ session, recents }) {
+export default function Truc({ session, recents, fetchRecents }) {
   const [users, setUsers] = useState([]);
   const [userRead, setUserRead] = useState(false); //za modala dava vreme dali butona e disablenat
   const [displayPopUp, setDisplayPopUp] = useState(false);
@@ -81,7 +81,7 @@ export default function Truc({ session, recents }) {
           {/* Find the corresponding user for the recent item based on user_id */}
           {users.map((user) => {
             if (user.id === recent.user_id) {
-              return <PrucBox key={recent.index} user={user} recent={recent} session={session}/>;
+              return <PrucBox key={recent.index} user={user} recent={recent} session={session} fetchRecents={fetchRecents}/>;
             }
             return null;
           })}

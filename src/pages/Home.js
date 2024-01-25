@@ -148,7 +148,7 @@ export default function Home({ session }) {
           fetchRecents={fetchRecents}
         />
       )}
-      {activeTab === "2" && <Pruc session={session} recents={recents} />}
+      {activeTab === "2" && <Pruc session={session} fetchRecents={fetchRecents} recents={recents} />}
     </Layout>
   );
 }
