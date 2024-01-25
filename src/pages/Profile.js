@@ -4,11 +4,14 @@ import Avatar from "../components/Avatar";
 import Layout from "../components/layout";
 import PrimaryBtn from "../components/Buttons/PrimaryBtn";
 import toast from "react-hot-toast";
+import { Textarea } from "../components/ui/textarea";
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState(null);
   const [avatar_url, setAvatarUrl] = useState(null);
+  const [isReportOpened, seIsReportOpened] = useState(false);
+  const [reportText, setReportText] = useState("");
 
   useEffect(() => {
     let ignore = false;
@@ -132,6 +135,17 @@ export default function Account({ session }) {
             {loading ? "Обновяване..." : "Обнови"}
           </PrimaryBtn>
         </div>
+      </form>
+
+        <div className="mt-6">
+
+
+        <a href="https://n383msp4fjw.typeform.com/to/oiIn9gVb">
+        <button onClick={() => seIsReportOpened(!isReportOpened)} className="bg-yellow-200 w-full p-2 rounded-[8px]">Докладвай проблем</button>
+
+        </a>
+
+        </div>
 
         <div className="absolute bottom-[100px] w-full left-0 px-[20px]">
           <button
@@ -143,7 +157,6 @@ export default function Account({ session }) {
             Излез 
           </button>
         </div>
-      </form>
     </Layout>
   );
 }

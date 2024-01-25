@@ -1,9 +1,37 @@
 import { useEffect, useState } from "react";
 import PrucBox from "../Information/PrucBox";
 import { supabase } from "../../lib/supabase";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import PrimaryBtn from "../Buttons/PrimaryBtn";
 
 export default function Truc({ session, recents }) {
   const [users, setUsers] = useState([]);
+  const [userRead, setUserRead] = useState(false); //za modala dava vreme dali butona e disablenat
+  const [displayPopUp, setDisplayPopUp] = useState(false);
+
+
+  const closePopUp = () => {
+    localStorage.setItem("seenPopUpPrucLikes", true);
+    setDisplayPopUp(false);
+  };
+
+  useEffect(() => {
+    let returningUser = localStorage.getItem("seenPopUpPrucLikes");
+    setDisplayPopUp(!returningUser);
+    setTimeout(() => {
+      setUserRead(false);
+    }, 5000);
+  }, []);
 
   async function fetchUsers() {
     try {
@@ -26,8 +54,27 @@ export default function Truc({ session, recents }) {
     fetchUsers();
   }, []);
 
+  
+
   return (
     <div className="flex flex-col gap-4 pb-5">
+            <AlertDialog open={displayPopUp} onOpenChange={setDisplayPopUp}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Вече има лайкове 🎉</AlertDialogTitle>
+            <AlertDialogDescription>
+              Изсиранията и историята на изсиране са{" "}
+              <span className="font-bold">Бета</span> версия на лайковете в <span className="font-bold">"Пръц"</span> е вече тук.
+              Ако изпитате затруднения или намерите проблем може да пишете от бутон <span className="font-bold">"Докладвай проблем"</span> от менюто в профила.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <PrimaryBtn disabled={userRead} onClick={() => closePopUp()}>
+              Разбрах 
+            </PrimaryBtn>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       {recents.map((recent) => (
         <>{recent.free_text && (
           <div key={recent.index}>
