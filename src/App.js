@@ -14,6 +14,8 @@ import LoadingScreen from "./components/Loading";
 import Recents from "./pages/Recents";
 import { AnimatePresence } from "framer-motion";
 import User from "./pages/User";
+import { getToken } from "firebase/messaging";
+import { messaging } from "./firebase/firebaseConfig";
 
 const supabase = createClient(
   "https://zyuebxkjnotchjumbrqq.supabase.co",
@@ -23,6 +25,30 @@ const supabase = createClient(
 export default function App() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+
+
+  
+  async function requestPermission() {
+    //requesting permission using Notification API
+    const permission = await Notification.requestPermission();
+
+    if (permission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey: "BD05wxbG4BsF_voCuDKOThxF_6Hj7t9jXdHGJ7HeKinOQrik2aY0BgSIs8Z0fn4aG2lyzo9v81scQl7ruQB1Xzw",
+      });
+
+      //We can send token to server
+      console.log("Token generated : ", token);
+    } else if (permission === "denied") {
+      //notifications are blocked
+      alert("You denied for the notification");
+    }
+  }
+
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {

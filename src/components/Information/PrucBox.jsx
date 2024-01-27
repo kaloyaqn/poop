@@ -10,7 +10,7 @@ export default function PrucBox({ recent, user, session, fetchRecents }) {
 
   useEffect(() => {
     // Fetch the user's avatar from Supabase storage
-    setLikesClient(recent.likes)
+    setLikesClient(recent.likes);
     const downloadUserAvatar = async () => {
       try {
         const path = `avatars/${user.id}.jpg`; // Adjust the path as needed
@@ -39,46 +39,40 @@ export default function PrucBox({ recent, user, session, fetchRecents }) {
   console.log(recent.id);
 
   async function Like() {
-    if (isLiked === true) 
-    {
-      setLikesClient(likesClient - 1)
+    if (isLiked === true) {
+      setLikesClient(likesClient - 1);
       setIsLiked(false);
 
       const { data, error } = await supabase
-      .from("poops")
-      .update({ likes: recent.likes - 1 })
-      .eq("id", recent.id);
+        .from("poops")
+        .update({ likes: recent.likes - 1 })
+        .eq("id", recent.id);
 
-      console.log(data)
-      console.log(error)
+      console.log(data);
+      console.log(error);
 
-    if (error) {
-      setLikesClient(likesClient + 1)
-      setIsLiked(true);
-    }
-    setLikesClient(likesClient - 1)
-    setIsLiked(false);
-
-    } 
-    else 
-    {
-
-      setLikesClient(likesClient + 1)
+      if (error) {
+        setLikesClient(likesClient + 1);
+        setIsLiked(true);
+      }
+      setLikesClient(likesClient - 1);
+      setIsLiked(false);
+    } else {
+      setLikesClient(likesClient + 1);
       setIsLiked(true);
 
       const { data, error } = await supabase
-      .from("poops")
-      .update({ likes: recent.likes + 1, liked_by: `{${session.user.id}}` })
-      .eq("id", recent.id);
+        .from("poops")
+        .update({ likes: recent.likes + 1, liked_by: `{${session.user.id}}` })
+        .eq("id", recent.id);
 
-      console.log(data)
-      console.log(error)
+      console.log(data);
+      console.log(error);
 
-    if (error) {
-      setLikesClient(likesClient - 1)
-      setIsLiked(false);
-    }
-
+      if (error) {
+        setLikesClient(likesClient - 1);
+        setIsLiked(false);
+      }
     }
 
     fetchRecents();
@@ -120,7 +114,7 @@ export default function PrucBox({ recent, user, session, fetchRecents }) {
               clip-rule="evenodd"
               d="M19.311 11.2415C19.6612 10.6677 19.8627 10.0009 19.8627 9.28877C19.8627 7.14374 18.0423 5.40486 15.7965 5.40486C15.6432 5.40486 15.4921 5.41369 15.3431 5.42945C16.5653 2.5869 14.5902 0 14.5902 0C13.3589 1.91663 10.7263 1.8988 10.5354 1.89492C10.5315 1.89492 10.5278 1.89468 10.524 1.89468C8.30362 1.89468 6.50016 3.59479 6.45965 5.70628C6.45901 5.70628 6.45836 5.70628 6.45777 5.70628C4.21207 5.70628 2.39153 7.44522 2.39153 9.59026C2.39153 10.246 2.56236 10.8634 2.86276 11.4052C1.2046 11.8952 0 13.3712 0 15.1161C0 17.2611 1.82049 19 4.06619 19H19.0419C21.2876 19 23.1081 17.2611 23.1081 15.1161C23.1081 13.0575 21.431 11.3739 19.311 11.2415Z"
               style={{ fill: isLiked ? " #5B3410" : "gray" }}
-              />
+            />
           </svg>
         </button>
 

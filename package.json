@@ -19,6 +19,7 @@
     "@vercel/speed-insights": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "firebase": "^10.7.2",
     "framer-motion": "^10.17.9",
     "lucide-react": "^0.309.0",
     "moment": "^2.30.1",
