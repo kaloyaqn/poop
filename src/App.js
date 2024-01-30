@@ -14,6 +14,7 @@ import LoadingScreen from "./components/Loading";
 import Recents from "./pages/Recents";
 import { AnimatePresence } from "framer-motion";
 import User from "./pages/User";
+import Spotify from "./pages/Spotify";
 
 const supabase = createClient(
   "https://zyuebxkjnotchjumbrqq.supabase.co",
@@ -75,6 +76,10 @@ export default function App() {
     {
       path: "/leaderboard",
       element: <Leaderboard session={session} />,
+    },
+    {
+      path: "/spotify",
+      element: <Spotify session={session} />,
     },
     {
       path: "/recents",

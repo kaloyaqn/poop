@@ -7,6 +7,7 @@ const RecentsComponent = ({ recents, height, className, showButton }) => {
   if (className === undefined) {
     className = " ";
   }
+
   return (
     <div
       className={`flex flex-col gap-5 transition-all overflow-scroll`}

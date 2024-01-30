@@ -19,9 +19,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  padding-left: 20px;
+  /* padding-left: 20px;
   padding-right: 20px;
-  padding-top:20px;
+  padding-top:20px; */
   background: #F8F7F6;
   background-color: #F8F7F6;
   margin-bottom: 88px;
@@ -92,6 +92,25 @@ textarea {
 .ptr, .ptr__children {
   position: inherit !important;
 
+}
+
+.leaderboard {
+  background: linear-gradient(127deg, #FDC500 0%, #FFD646 64%, #FFC700 64%) !important;
+  height: 100vh;
+}
+
+@media screen and (max-width: 383px) {
+  .text-container span {
+    font-size: 13px !important;
+    line-height: 0!important;
+  }
+
+  .text-container {
+    margin-left:8px;
+  }
+  .text-container p {
+
+  }
 }
 
 @layer base {

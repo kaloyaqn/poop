@@ -16,7 +16,7 @@ const Leaderboard = ({ session }) => {
     const { data, error } = await supabase
       .from("profiles")
       .select("poop_score, username, avatar_url, is_beta_tester, id")
-      .order("poop_score", { ascending: false });
+      .order("poop_score", { ascending: false })
 
     // console.log(data);
     // console.log(error);
@@ -55,8 +55,10 @@ const Leaderboard = ({ session }) => {
   }
 
   return (
-    <Layout>
+    <div className="leaderboard absolute w-full left-0 top-0">
+    <Layout className="pt-5" headerClassName="px-5 mb-0 transition-all" style={{zIndex: 999999}}>
       <PullToRefresh onRefresh={fetchUsers} pullingContent={<></>} className="flex flex-col gap-1">
+        <div className="z-3 rounded-[30px] bg-white px-6 pt-8 transition-all">
         {users.map((user, index) => (
           <div key={user.index}>
             {loading ? (
@@ -85,9 +87,11 @@ const Leaderboard = ({ session }) => {
               </AnimatePresence>
             )}
           </div>
-        ))}
+        ))} 
+        </div>
       </PullToRefresh>
     </Layout>
+    </div>
   );
 };
 

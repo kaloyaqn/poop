@@ -46,7 +46,7 @@ const AddPoopBtn = ({
       data-isOpen={isOpen}
       className="p-5 pt-6 pb-6  bg-white rounded-[20px] mt-5 parent"
     >
-      <motion.div layout className="mb-3.5 flex justify-between items-center">
+      <motion.div layout className="mb-3.5 flex justify-between items-center text-container-add-poop">
         <motion.div
           layout
           className="rounded-full bg-red-900 w-11 h-11 flex justify-center items-center bg-gradient-to-r from-[#BBB0A7] to-[#D5AE8C]"
@@ -64,7 +64,7 @@ const AddPoopBtn = ({
             />
           </svg>
         </motion.div>
-        <motion.div layout>
+        <motion.div className="text-container" layout>
           <p className="text-[#151616] font-medium leading-4 w-xs:bg-red-500">
             Готов ли си да се изакаш?
           </p>

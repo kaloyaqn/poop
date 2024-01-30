@@ -17,12 +17,11 @@ export default function Account({ session }) {
     let ignore = false;
     async function getProfile() {
       setLoading(true);
-      const { user } = session;
 
       const { data, error } = await supabase
         .from("profiles")
         .select(`username, avatar_url`)
-        .eq("id", user.id)
+        .eq("id", session.user.id)
         .single();
 
       if (!ignore) {
