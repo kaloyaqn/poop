@@ -13,35 +13,37 @@ export default function Account({ session }) {
   const [isReportOpened, seIsReportOpened] = useState(false);
   const [reportText, setReportText] = useState("");
 
-  useEffect(() => {
-    let ignore = false;
-    async function getProfile() {
-      setLoading(true);
+  async function getProfile() {
+    setLoading(true);
+    const { user } = session;
 
-      const { data, error } = await supabase
-        .from("profiles")
-        .select(`username, avatar_url`)
-        .eq("id", session.user.id)
-        .single();
+    const { data, error } = await supabase
+      .from("profiles")
+      .select(`username, avatar_url`)
+      .eq("id", user.id)
+      .single();
 
-      if (!ignore) {
-        if (error) {
-          console.warn(error);
-        } else if (data) {
-          setUsername(data.username);
-          setAvatarUrl(data.avatar_url);
-          console.log(avatar_url);
-        }
+      if (error) {
+        console.warn(error);
+      } else if (data) {
+        setUsername(data.username);
+        setAvatarUrl(data.avatar_url);
+        console.log(avatar_url);
       }
 
-      setLoading(false);
+    setLoading(false);
+  }
+
+
+
+  useEffect(() => {
+    if (!session || !session.user) {
+      return;
+    } else {
+      getProfile();
+
     }
 
-    getProfile();
-
-    return () => {
-      ignore = true;
-    };
   }, [session]);
 
   async function updateProfile(event, avatarUrl) {
