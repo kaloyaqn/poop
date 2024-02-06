@@ -15,6 +15,7 @@ import Recents from "./pages/Recents";
 import { AnimatePresence } from "framer-motion";
 import User from "./pages/User";
 import Spotify from "./pages/Spotify";
+import Layout from "./components/layout";
 
 const supabase = createClient(
   "https://zyuebxkjnotchjumbrqq.supabase.co",
@@ -64,6 +65,9 @@ export default function App() {
     {
       path: "/",
       element: <Home session={session} />,
+    },
+    {
+      element: <Layout session={session} />,
     },
     {
       path: "/profile",

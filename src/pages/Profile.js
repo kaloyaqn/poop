@@ -71,7 +71,7 @@ export default function Account({ session }) {
   }
 
   return (
-    <Layout>
+    <Layout session={session}>
       <form onSubmit={updateProfile} className="form-widget">
         <div className="w-full flex items-center justify-center">
         <Avatar
