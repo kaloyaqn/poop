@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+  
   return (
     <div className="fixed bottom-0 left-0 z-50 w-full pt-8 pb-8 px-12 bg-white flex justify-between items-center">
       <a href="/">
